@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Interactive Planning Dashboard</title>
+
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Chart.js (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* Responsive chart container */
+    .chart-container { position: relative; height: 18rem; }
+    @media (min-width: 768px) { .chart-container { height: 22rem; } }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <header class="bg-gradient-to-r from-[#003B73] to-[#0074D9] text-white">
+    <div class="max-w-5xl mx-auto px-4 py-6">
+      <h1 class="text-3xl font-bold">Interactive Planning Dashboard</h1>
+      <p class="opacity-90 mt-1">Adjust the inputs, visualize the plan, and export charts as PNGs. Your values are saved to this device automatically.</p>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 py-8 space-y-8">
+
+    <!-- Global controls -->
+    <section class="bg-white rounded-xl shadow p-6">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-semibold">Your Workspace</h2>
+          <p class="text-sm text-gray-600">Use the sections below to set values for each chart. Data auto-saves in your browser (no sign-in needed).</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <button id="resetAll" class="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 border">Reset all charts</button>
+          <button id="clearStorage" class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700">Clear saved data</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHART 1: Time Allocation -->
+    <section class="bg-white rounded-xl shadow p-6 space-y-4">
+      <h2 class="text-2xl font-bold text-[#0074D9] text-center">Time Allocation per Phase (weeks)</h2>
+
+      <!-- Controls -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <label class="block text-sm">
+          <span class="font-medium">Design</span>
+          <input id="time-design" type="number" min="0" max="20" step="1" class="w-full mt-1 border rounded-lg p-2" />
+        </label>
+        <label class="block text-sm">
+          <span class="font-medium">Calibrate</span>
+          <input id="time-calibrate" type="number" min="0" max="20" step="1" class="w-full mt-1 border rounded-lg p-2" />
+        </label>
+        <label class="block text-sm">
+          <span class="font-medium">Co-Manage</span>
+          <input id="time-comanage" type="number" min="0" max="20" step="1" class="w-full mt-1 border rounded-lg p-2" />
+        </label>
+        <label class="block text-sm">
+          <span class="font-medium">Debrief</span>
+          <input id="time-debrief" type="number" min="0" max="20" step="1" class="w-full mt-1 border rounded-lg p-2" />
+        </label>
+      </div>
+
+      <div class="chart-container">
+        <canvas id="timeAllocationChart" aria-label="Time allocation bar chart" role="img"></canvas>
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+        <button id="timeExport" class="px-4 py-2 rounded-lg bg-[#003B73] text-white hover:brightness-110">Export PNG</button>
+        <button id="timeReset" class="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 border">Reset</button>
+      </div>
+    </section>
+
+    <!-- CHART 2: Task Distribution -->
+    <section class="bg-white rounded-xl shadow p-6 space-y-4">
+      <h2 class="text-2xl font-bold text-[#0074D9] text-center">Task Distribution (count)</h2>
+
+      <!-- Controls -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <label class="block text-sm">
+          <span class="font-medium">Research</span>
+          <input id="task-research" type="number" min="0" step="1" class="w-full mt-1 border rounded-lg p-2" />
+        </label>
+        <label class="block text-sm">
+          <span class="font-medium">Build</span>
+          <input id="task-build" type="number" min="0" step="1" class="w-full mt-1 border rounded-lg p-2" />
+        </label>
+        <label class="block text-sm">
+          <span class="font-medium">Test</span>
+          <input id="task-test" type="number" min="0" step="1" class="w-full mt-1 border rounded-lg p-2" />
+        </label>
+        <label class="block text-sm">
+          <span class="font-medium">Present</span>
+          <input id="task-present" type="number" min="0" step="1" class="w-full mt-1 border rounded-lg p-2" />
+        </label>
+      </div>
+
+      <div class="chart-container">
+        <canvas id="taskDistributionChart" aria-label="Task distribution doughnut chart" role="img"></canvas>
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+        <button id="taskExport" class="px-4 py-2 rounded-lg bg-[#003B73] text-white hover:brightness-110">Export PNG</button>
+        <button id="taskReset" class="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 border">Reset</button>
+      </div>
+    </section>
+
+    <!-- CHART 3: Resources Used -->
+    <section class="bg-white rounded-xl shadow p-6 space-y-4">
+      <h2 class="text-2xl font-bold text-[#0074D9] text-center">Resources Used (hours)</h2>
+
+      <!-- Controls -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <label class="block text-sm">
+          <span class="font-medium">Mentor Time</span>
+          <input id="res-mentor" type="number" min="0" step="0.5" class="w-full mt-1 border rounded-lg p-2" />
+        </label>
+        <label class="block text-sm">
+          <span class="font-medium">Lab/Tools</span>
+          <input id="res-lab" type="number" min="0" step="0.5" class="w-full mt-1 border rounded-lg p-2" />
+        </label>
+        <label class="block text-sm">
+          <span class="font-medium">Reading</span>
+          <input id="res-reading" type="number" min="0" step="0.5" class="w-full mt-1 border rounded-lg p-2" />
+        </label>
+        <label class="block text-sm">
+          <span class="font-medium">Practice</span>
+          <input id="res-practice" type="number" min="0" step="0.5" class="w-full mt-1 border rounded-lg p-2" />
+        </label>
+      </div>
+
+      <div class="chart-container">
+        <canvas id="resourceChart" aria-label="Resources line chart" role="img"></canvas>
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+        <button id="resExport" class="px-4 py-2 rounded-lg bg-[#003B73] text-white hover:brightness-110">Export PNG</button>
+        <button id="resReset" class="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 border">Reset</button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <section class="text-center text-xs text-gray-500">
+      <p>No personal data is collected. Values are saved only in your browser via localStorage.</p>
+    </section>
+  </main>
+
+  <script>
+    // ---------- Helpers ----------
+    const clampNum = (v, min, max) => isNaN(v) ? min : Math.max(min, Math.min(max, v));
+    const getNum = (el, min=0) => {
+      const v = parseFloat(el.value);
+      const clamped = Math.max(min, isNaN(v) ? min : v);
+      el.value = clamped;
+      return clamped;
+    };
+    const toPNG = (chart, filename) => {
+      const url = chart.toBase64Image ? chart.toBase64Image() : chart.canvas.toDataURL("image/png");
+      const a = document.createElement('a');
+      a.href = url; a.download = filename; a.click();
+    };
+
+    // ---------- Defaults ----------
+    const DEFAULTS = {
+      time: [3, 3, 3, 1],             // weeks for [Design, Calibrate, Co-Manage, Debrief]
+      tasks: [6, 10, 5, 3],           // counts for [Research, Build, Test, Present]
+      res: [4, 6, 3, 5],              // hours for [Mentor, Lab, Reading, Practice]
+    };
+
+    // ---------- Local Storage Keys ----------
+    const KEYS = {
+      time: 'dashboard_timeData_v1',
+      tasks: 'dashboard_taskData_v1',
+      res: 'dashboard_resourceData_v1',
+    };
+
+    // ---------- Elements ----------
+    // Time
+    const elTime = {
+      design: document.getElementById('time-design'),
+      calibrate: document.getElementById('time-calibrate'),
+      comanage: document.getElementById('time-comanage'),
+      debrief: document.getElementById('time-debrief'),
+      export: document.getElementById('timeExport'),
+      reset: document.getElementById('timeReset'),
+      canvas: document.getElementById('timeAllocationChart'),
+    };
+
+    // Tasks
+    const elTask = {
+      research: document.getElementById('task-research'),
+      build: document.getElementById('task-build'),
+      test: document.getElementById('task-test'),
+      present: document.getElementById('task-present'),
+      export: document.getElementById('taskExport'),
+      reset: document.getElementById('taskReset'),
+      canvas: document.getElementById('taskDistributionChart'),
+    };
+
+    // Resources
+    const elRes = {
+      mentor: document.getElementById('res-mentor'),
+      lab: document.getElementById('res-lab'),
+      reading: document.getElementById('res-reading'),
+      practice: document.getElementById('res-practice'),
+      export: document.getElementById('resExport'),
+      reset: document.getElementById('resReset'),
+      canvas: document.getElementById('resourceChart'),
+    };
+
+    // Global
+    const btnResetAll = document.getElementById('resetAll');
+    const btnClearStorage = document.getElementById('clearStorage');
+
+    // ---------- State Load/Save ----------
+    const loadArray = (key, fallback) => {
+      try {
+        const raw = localStorage.getItem(key);
+        const arr = JSON.parse(raw);
+        return Array.isArray(arr) && arr.length === fallback.length ? arr : fallback.slice();
+      } catch {
+        return fallback.slice();
+      }
+    };
+
+    const saveArray = (key, arr) => {
+      try { localStorage.setItem(key, JSON.stringify(arr)); } catch {}
+    };
+
+    // ---------- Initialize Inputs from Storage ----------
+    const timeData = loadArray(KEYS.time, DEFAULTS.time);
+    elTime.design.value = timeData[0];
+    elTime.calibrate.value = timeData[1];
+    elTime.comanage.value = timeData[2];
+    elTime.debrief.value = timeData[3];
+
+    const taskData = loadArray(KEYS.tasks, DEFAULTS.tasks);
+    elTask.research.value = taskData[0];
+    elTask.build.value = taskData[1];
+    elTask.test.value = taskData[2];
+    elTask.present.value = taskData[3];
+
+    const resData = loadArray(KEYS.res, DEFAULTS.res);
+    elRes.mentor.value = resData[0];
+    elRes.lab.value = resData[1];
+    elRes.reading.value = resData[2];
+    elRes.practice.value = resData[3];
+
+    // ---------- Build Charts ----------
+    const timeChart = new Chart(elTime.canvas.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['Design', 'Calibrate', 'Co-Manage', 'Debrief'],
+        datasets: [{
+          label: 'Weeks',
+          data: timeData,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        scales: { y: { beginAtZero: true, ticks: { precision: 0 } } },
+        plugins: { legend: { display: false } }
+      }
+    });
+
+    const taskChart = new Chart(elTask.canvas.getContext('2d'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Research', 'Build', 'Test', 'Present'],
+        datasets: [{
+          label: 'Tasks',
+          data: taskData
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom' } }
+      }
+    });
+
+    const resChart = new Chart(elRes.canvas.getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: ['Mentor', 'Lab/Tools', 'Reading', 'Practice'],
+        datasets: [{
+          label: 'Hours',
+          data: resData,
+          tension: 0.25,
+          fill: false
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        scales: { y: { beginAtZero: true } },
+        plugins: { legend: { display: false } }
+      }
+    });
+
+    // ---------- Wiring: inputs -> charts -> storage ----------
+    const bindInputs = (inputs, chart, key, min=0) => {
+      const toArray = () => inputs.map(el => getNum(el, min));
+      const update = () => {
+        const arr = toArray();
+        chart.data.datasets[0].data = arr;
+        chart.update();
+        saveArray(key, arr);
+      };
+      inputs.forEach(el => el.addEventListener('input', update));
+      return { update };
+    };
+
+    const timeBinding = bindInputs(
+      [elTime.design, elTime.calibrate, elTime.comanage, elTime.debrief],
+      timeChart,
+      KEYS.time,
+      0
+    );
+
+    const taskBinding = bindInputs(
+      [elTask.research, elTask.build, elTask.test, elTask.present],
+      taskChart,
+      KEYS.tasks,
+      0
+    );
+
+    const resBinding = bindInputs(
+      [elRes.mentor, elRes.lab, elRes.reading, elRes.practice],
+      resChart,
+      KEYS.res,
+      0
+    );
+
+    // Initial normalize & update (ensures valid numbers)
+    timeBinding.update();
+    taskBinding.update();
+    resBinding.update();
+
+    // ---------- Export buttons ----------
+    elTime.export.addEventListener('click', () => toPNG(timeChart, 'time-allocation.png'));
+    elTask.export.addEventListener('click', () => toPNG(taskChart, 'task-distribution.png'));
+    elRes.export.addEventListener('click', () => toPNG(resChart, 'resources-used.png'));
+
+    // ---------- Reset buttons ----------
+    const writeInputs = (els, vals) => els.forEach((el, i) => el.value = vals[i]);
+
+    elTime.reset.addEventListener('click', () => {
+      writeInputs([elTime.design, elTime.calibrate, elTime.comanage, elTime.debrief], DEFAULTS.time);
+      timeBinding.update();
+    });
+
+    elTask.reset.addEventListener('click', () => {
+      writeInputs([elTask.research, elTask.build, elTask.test, elTask.present], DEFAULTS.tasks);
+      taskBinding.update();
+    });
+
+    elRes.reset.addEventListener('click', () => {
+      writeInputs([elRes.mentor, elRes.lab, elRes.reading, elRes.practice], DEFAULTS.res);
+      resBinding.update();
+    });
+
+    // ---------- Global controls ----------
+    btnResetAll.addEventListener('click', () => {
+      // reset inputs to defaults
+      elTime.reset.click();
+      elTask.reset.click();
+      elRes.reset.click();
+    });
+
+    btnClearStorage.addEventListener('click', () => {
+      try {
+        localStorage.removeItem(KEYS.time);
+        localStorage.removeItem(KEYS.tasks);
+        localStorage.removeItem(KEYS.res);
+        alert('Saved data cleared for this page.\nYour charts now reflect the current inputs.');
+      } catch {
+        alert('Could not clear saved data (localStorage may be blocked).');
+      }
+    });
+  </script>
+</body>
+</html>
