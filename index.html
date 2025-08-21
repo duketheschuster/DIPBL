@@ -1,385 +1,414 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Interactive Planning Dashboard</title>
+  <title>DIPBL Project Organizer · Dante Theme</title>
 
-  <!-- Tailwind (CDN) -->
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Chart.js (CDN) -->
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
-    /* Responsive chart container */
-    .chart-container { position: relative; height: 18rem; }
-    @media (min-width: 768px) { .chart-container { height: 22rem; } }
+    :root {
+      --inferno-dark: #12090a;   /* very dark wine */
+      --inferno-red:  #8b0d11;   /* deep crimson */
+      --inferno-ember:#c43e2f;   /* ember red */
+      --inferno-gold: #c8a45d;   /* parchment gold */
+      --inferno-ash:  #2a2223;   /* charcoal ash */
+      --parchment:    #faf6ef;
+    }
+    html, body { background: radial-gradient(1000px 500px at 50% 0%, #1f0e10, var(--inferno-dark)); }
+    .hdr {
+      background:
+        radial-gradient(1200px 400px at 50% -20%, rgba(255,90,0,.15), transparent 60%),
+        linear-gradient(to right, var(--inferno-dark), #2a0b0b, var(--inferno-red));
+    }
+    .title-shadow { text-shadow: 0 2px 10px rgba(0,0,0,.6); }
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .parchment {
+      background: linear-gradient(180deg, rgba(200,164,93,.08), rgba(200,164,93,.04));
+      border: 1px solid rgba(200,164,93,.22);
+    }
+    .flame-divider {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--inferno-ember), var(--inferno-gold), var(--inferno-ember), transparent);
+      filter: drop-shadow(0 0 6px rgba(196,62,47,.45));
+    }
+    .chart-slim { position: relative; height: 8rem; }    /* compact charts */
+    @media (min-width: 768px) { .chart-slim { height: 10rem; } }
+
+    .hat { border-width:1px; }
+    .hat-white { background:#f7f7f7; color:#111; border-color:#e5e5e5; }
+    .hat-red   { background:#7f1d1d; color:#fff; border-color:#9f1239; }
+    .hat-black { background:#0b0b0c; color:#e5e7eb; border-color:#1f2937; }
+    .hat-yellow{ background:#f6e27a; color:#111; border-color:#eab308; }
+    .hat-green { background:#064e3b; color:#d1fae5; border-color:#059669; }
+    .hat-blue  { background:#0f172a; color:#e2e8f0; border-color:#334155; }
+
+    textarea {
+      resize: vertical;
+      min-height: 6rem;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.2);
+    }
+    .count { font-variant-numeric: tabular-nums; }
   </style>
 </head>
-<body class="bg-gray-50 text-gray-900">
-  <header class="bg-gradient-to-r from-[#003B73] to-[#0074D9] text-white">
-    <div class="max-w-5xl mx-auto px-4 py-6">
-      <h1 class="text-3xl font-bold">Interactive Planning Dashboard</h1>
-      <p class="opacity-90 mt-1">Adjust the inputs, visualize the plan, and export charts as PNGs. Your values are saved to this device automatically.</p>
-    </div>
+<body class="text-gray-100 font-[Crimson_Text] min-h-full">
+
+  <!-- Header -->
+  <header class="hdr text-center py-10 shadow-xl">
+    <h1 class="font-[Cinzel] text-3xl md:text-5xl font-extrabold text-[var(--inferno-gold)] title-shadow">
+      DIPBL Project Organizer
+    </h1>
+    <p class="mt-2 text-sm md:text-base text-gray-200/90">Track time, think with De Bono’s hats, and analyze through Dante, Contemporary Art, and Community Action lenses.</p>
+    <div class="mx-auto mt-6 max-w-5xl flame-divider rounded-full"></div>
   </header>
 
-  <main class="max-w-5xl mx-auto px-4 py-8 space-y-8">
+  <main class="max-w-6xl mx-auto px-4 md:px-6 py-8 space-y-8">
 
-    <!-- Global controls -->
-    <section class="bg-white rounded-xl shadow p-6">
-      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
-          <h2 class="text-xl font-semibold">Your Workspace</h2>
-          <p class="text-sm text-gray-600">Use the sections below to set values for each chart. Data auto-saves in your browser (no sign-in needed).</p>
+    <!-- TOP STRIP: Compact Charts -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Time Allocation -->
+      <div class="card rounded-2xl p-4">
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="font-[Cinzel] text-lg text-[var(--inferno-gold)]">Time Allocation</h2>
+          <button id="timeExport" class="text-xs px-2 py-1 rounded bg-[var(--inferno-ash)] hover:bg-black/60">PNG</button>
         </div>
-        <div class="flex flex-wrap gap-3">
-          <button id="resetAll" class="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 border">Reset all charts</button>
-          <button id="clearStorage" class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700">Clear saved data</button>
+        <div class="chart-slim"><canvas id="timeChart"></canvas></div>
+        <details class="mt-2">
+          <summary class="cursor-pointer text-xs text-gray-300 hover:text-white">Adjust data</summary>
+          <div class="grid grid-cols-2 gap-2 mt-2 text-xs">
+            <label>Design <input id="t-design" type="number" min="0" max="20" value="3" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
+            <label>Calibrate <input id="t-cal" type="number" min="0" max="20" value="3" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
+            <label>Co-Manage <input id="t-co" type="number" min="0" max="20" value="3" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
+            <label>Debrief <input id="t-deb" type="number" min="0" max="20" value="1" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
+          </div>
+        </details>
+      </div>
+
+      <!-- Tasks -->
+      <div class="card rounded-2xl p-4">
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="font-[Cinzel] text-lg text-[var(--inferno-gold)]">Task Distribution</h2>
+          <button id="taskExport" class="text-xs px-2 py-1 rounded bg-[var(--inferno-ash)] hover:bg-black/60">PNG</button>
+        </div>
+        <div class="chart-slim"><canvas id="taskChart"></canvas></div>
+        <details class="mt-2">
+          <summary class="cursor-pointer text-xs text-gray-300 hover:text-white">Adjust data</summary>
+          <div class="grid grid-cols-2 gap-2 mt-2 text-xs">
+            <label>Research <input id="k-research" type="number" min="0" value="6" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
+            <label>Build <input id="k-build" type="number" min="0" value="10" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
+            <label>Test <input id="k-test" type="number" min="0" value="5" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
+            <label>Present <input id="k-present" type="number" min="0" value="3" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
+          </div>
+        </details>
+      </div>
+
+      <!-- Resources -->
+      <div class="card rounded-2xl p-4">
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="font-[Cinzel] text-lg text-[var(--inferno-gold)]">Resources (hours)</h2>
+          <button id="resExport" class="text-xs px-2 py-1 rounded bg-[var(--inferno-ash)] hover:bg-black/60">PNG</button>
+        </div>
+        <div class="chart-slim"><canvas id="resChart"></canvas></div>
+        <details class="mt-2">
+          <summary class="cursor-pointer text-xs text-gray-300 hover:text-white">Adjust data</summary>
+          <div class="grid grid-cols-2 gap-2 mt-2 text-xs">
+            <label>Mentor <input id="r-mentor" type="number" min="0" step="0.5" value="4" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
+            <label>Lab/Tools <input id="r-lab" type="number" min="0" step="0.5" value="6" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
+            <label>Reading <input id="r-reading" type="number" min="0" step="0.5" value="3" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
+            <label>Practice <input id="r-practice" type="number" min="0" step="0.5" value="5" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- Six Thinking Hats -->
+    <section class="parchment rounded-2xl p-6">
+      <div class="flex items-center gap-3 mb-4">
+        <svg width="22" height="22" viewBox="0 0 24 24" class="shrink-0"><path fill="currentColor" d="M12 2c-3 0-5 2-5 4v1H6a2 2 0 0 0-2 2v1h16V9a2 2 0 0 0-2-2h-1V6c0-2-2-4-5-4m-7 9v6a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-6z"/></svg>
+        <h2 class="font-[Cinzel] text-2xl text-[var(--inferno-red)]">Six Thinking Hats</h2>
+      </div>
+      <p class="text-sm text-gray-900/80 mb-4">Use each hat to explore your idea from different angles. Notes auto-save locally.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="hat hat-white rounded-xl p-4">
+          <h3 class="font-[Cinzel] text-lg mb-2">White — Facts</h3>
+          <textarea id="hat-white" placeholder="Key facts, data, sources…"
+            class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+          <div class="flex justify-between mt-2 text-xs">
+            <span>What do we know? What’s missing?</span><span class="count" data-for="hat-white"></span>
+          </div>
+        </div>
+
+        <div class="hat hat-red rounded-xl p-4">
+          <h3 class="font-[Cinzel] text-lg mb-2">Red — Feelings</h3>
+          <textarea id="hat-red" placeholder="Intuition, gut reactions, emotions…"
+            class="w-full rounded p-3 text-sm text-white/90"></textarea>
+          <div class="flex justify-between mt-2 text-xs">
+            <span>How does this feel?</span><span class="count" data-for="hat-red"></span>
+          </div>
+        </div>
+
+        <div class="hat hat-black rounded-xl p-4">
+          <h3 class="font-[Cinzel] text-lg mb-2">Black — Cautions</h3>
+          <textarea id="hat-black" placeholder="Risks, weaknesses, concerns…"
+            class="w-full rounded p-3 text-sm text-gray-100"></textarea>
+          <div class="flex justify-between mt-2 text-xs">
+            <span>What could go wrong?</span><span class="count" data-for="hat-black"></span>
+          </div>
+        </div>
+
+        <div class="hat hat-yellow rounded-xl p-4">
+          <h3 class="font-[Cinzel] text-lg mb-2">Yellow — Benefits</h3>
+          <textarea id="hat-yellow" placeholder="Benefits, value, opportunities…"
+            class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+          <div class="flex justify-between mt-2 text-xs">
+            <span>Why is this worthwhile?</span><span class="count" data-for="hat-yellow"></span>
+          </div>
+        </div>
+
+        <div class="hat hat-green rounded-xl p-4">
+          <h3 class="font-[Cinzel] text-lg mb-2">Green — Ideas</h3>
+          <textarea id="hat-green" placeholder="Alternatives, creative angles, variations…"
+            class="w-full rounded p-3 text-sm text-emerald-50"></textarea>
+          <div class="flex justify-between mt-2 text-xs">
+            <span>What else could we try?</span><span class="count" data-for="hat-green"></span>
+          </div>
+        </div>
+
+        <div class="hat hat-blue rounded-xl p-4">
+          <h3 class="font-[Cinzel] text-lg mb-2">Blue — Process</h3>
+          <textarea id="hat-blue" placeholder="Next steps, process, roles, timeline…"
+            class="w-full rounded p-3 text-sm text-slate-100"></textarea>
+          <div class="flex justify-between mt-2 text-xs">
+            <span>How do we manage it?</span><span class="count" data-for="hat-blue"></span>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- CHART 1: Time Allocation -->
-    <section class="bg-white rounded-xl shadow p-6 space-y-4">
-      <h2 class="text-2xl font-bold text-[#0074D9] text-center">Time Allocation per Phase (weeks)</h2>
-
-      <!-- Controls -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <label class="block text-sm">
-          <span class="font-medium">Design</span>
-          <input id="time-design" type="number" min="0" max="20" step="1" class="w-full mt-1 border rounded-lg p-2" />
-        </label>
-        <label class="block text-sm">
-          <span class="font-medium">Calibrate</span>
-          <input id="time-calibrate" type="number" min="0" max="20" step="1" class="w-full mt-1 border rounded-lg p-2" />
-        </label>
-        <label class="block text-sm">
-          <span class="font-medium">Co-Manage</span>
-          <input id="time-comanage" type="number" min="0" max="20" step="1" class="w-full mt-1 border rounded-lg p-2" />
-        </label>
-        <label class="block text-sm">
-          <span class="font-medium">Debrief</span>
-          <input id="time-debrief" type="number" min="0" max="20" step="1" class="w-full mt-1 border rounded-lg p-2" />
-        </label>
+    <!-- Three-Lens Analysis -->
+    <section class="card rounded-2xl p-6">
+      <div class="flex items-center gap-3 mb-4">
+        <svg width="22" height="22" viewBox="0 0 24 24" class="shrink-0"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2Zm1 15h-2v-2h2Zm0-4h-2V7h2Z"/></svg>
+        <h2 class="font-[Cinzel] text-2xl text-[var(--inferno-gold)]">Three-Lens Analysis</h2>
       </div>
+      <p class="text-sm text-gray-200/90 mb-4">Brainstorm for each lens. Use prompts to get started.</p>
 
-      <div class="chart-container">
-        <canvas id="timeAllocationChart" aria-label="Time allocation bar chart" role="img"></canvas>
-      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Dante -->
+        <div class="rounded-xl p-4 border border-white/10 bg-black/20">
+          <h3 class="font-[Cinzel] text-lg text-[var(--inferno-ember)]">Dante’s Lens</h3>
+          <p class="text-xs text-gray-300 mb-2">Allegory, moral choices, symbolism, journey motifs, circles/sins/virtues.</p>
+          <textarea id="lens-dante" placeholder="How does your topic echo Dante’s journeys or moral frameworks?"
+            class="w-full rounded p-3 text-sm"></textarea>
+          <div class="flex justify-between mt-2 text-xs">
+            <span>Prompt: Which circle/theme best mirrors your issue?</span><span class="count" data-for="lens-dante"></span>
+          </div>
+        </div>
 
-      <div class="flex flex-wrap gap-3">
-        <button id="timeExport" class="px-4 py-2 rounded-lg bg-[#003B73] text-white hover:brightness-110">Export PNG</button>
-        <button id="timeReset" class="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 border">Reset</button>
-      </div>
-    </section>
+        <!-- Contemporary Art -->
+        <div class="rounded-xl p-4 border border-white/10 bg-black/20">
+          <h3 class="font-[Cinzel] text-lg text-[var(--inferno-ember)]">Contemporary Art’s Lens</h3>
+          <p class="text-xs text-gray-300 mb-2">Media, audience, message, intervention, remix, visual metaphors.</p>
+          <textarea id="lens-art" placeholder="How might contemporary artists represent or challenge this topic?"
+            class="w-full rounded p-3 text-sm"></textarea>
+          <div class="flex justify-between mt-2 text-xs">
+            <span>Prompt: What form would your ‘piece’ take?</span><span class="count" data-for="lens-art"></span>
+          </div>
+        </div>
 
-    <!-- CHART 2: Task Distribution -->
-    <section class="bg-white rounded-xl shadow p-6 space-y-4">
-      <h2 class="text-2xl font-bold text-[#0074D9] text-center">Task Distribution (count)</h2>
-
-      <!-- Controls -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <label class="block text-sm">
-          <span class="font-medium">Research</span>
-          <input id="task-research" type="number" min="0" step="1" class="w-full mt-1 border rounded-lg p-2" />
-        </label>
-        <label class="block text-sm">
-          <span class="font-medium">Build</span>
-          <input id="task-build" type="number" min="0" step="1" class="w-full mt-1 border rounded-lg p-2" />
-        </label>
-        <label class="block text-sm">
-          <span class="font-medium">Test</span>
-          <input id="task-test" type="number" min="0" step="1" class="w-full mt-1 border rounded-lg p-2" />
-        </label>
-        <label class="block text-sm">
-          <span class="font-medium">Present</span>
-          <input id="task-present" type="number" min="0" step="1" class="w-full mt-1 border rounded-lg p-2" />
-        </label>
-      </div>
-
-      <div class="chart-container">
-        <canvas id="taskDistributionChart" aria-label="Task distribution doughnut chart" role="img"></canvas>
-      </div>
-
-      <div class="flex flex-wrap gap-3">
-        <button id="taskExport" class="px-4 py-2 rounded-lg bg-[#003B73] text-white hover:brightness-110">Export PNG</button>
-        <button id="taskReset" class="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 border">Reset</button>
+        <!-- Community Action -->
+        <div class="rounded-xl p-4 border border-white/10 bg-black/20">
+          <h3 class="font-[Cinzel] text-lg text-[var(--inferno-ember)]">Community Action’s Lens</h3>
+          <p class="text-xs text-gray-300 mb-2">Stakeholders, needs, feasibility, impact, ethical considerations.</p>
+          <textarea id="lens-community" placeholder="What actions could mobilize your community around this topic?"
+            class="w-full rounded p-3 text-sm"></textarea>
+          <div class="flex justify-between mt-2 text-xs">
+            <span>Prompt: What is a first, concrete step?</span><span class="count" data-for="lens-community"></span>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- CHART 3: Resources Used -->
-    <section class="bg-white rounded-xl shadow p-6 space-y-4">
-      <h2 class="text-2xl font-bold text-[#0074D9] text-center">Resources Used (hours)</h2>
-
-      <!-- Controls -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <label class="block text-sm">
-          <span class="font-medium">Mentor Time</span>
-          <input id="res-mentor" type="number" min="0" step="0.5" class="w-full mt-1 border rounded-lg p-2" />
-        </label>
-        <label class="block text-sm">
-          <span class="font-medium">Lab/Tools</span>
-          <input id="res-lab" type="number" min="0" step="0.5" class="w-full mt-1 border rounded-lg p-2" />
-        </label>
-        <label class="block text-sm">
-          <span class="font-medium">Reading</span>
-          <input id="res-reading" type="number" min="0" step="0.5" class="w-full mt-1 border rounded-lg p-2" />
-        </label>
-        <label class="block text-sm">
-          <span class="font-medium">Practice</span>
-          <input id="res-practice" type="number" min="0" step="0.5" class="w-full mt-1 border rounded-lg p-2" />
-        </label>
-      </div>
-
-      <div class="chart-container">
-        <canvas id="resourceChart" aria-label="Resources line chart" role="img"></canvas>
-      </div>
-
-      <div class="flex flex-wrap gap-3">
-        <button id="resExport" class="px-4 py-2 rounded-lg bg-[#003B73] text-white hover:brightness-110">Export PNG</button>
-        <button id="resReset" class="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 border">Reset</button>
+    <!-- Actions -->
+    <section class="flex flex-wrap items-center gap-3 justify-between">
+      <div class="text-xs text-gray-300">No personal data is collected. All entries stay in your browser.</div>
+      <div class="flex gap-2">
+        <button id="exportNotes" class="px-3 py-2 rounded bg-[var(--inferno-ember)] text-white hover:brightness-110">Download Notes (.txt)</button>
+        <button id="clearAll" class="px-3 py-2 rounded bg-black/40 hover:bg-black/60 border border-white/10">Clear Saved Data</button>
       </div>
     </section>
 
-    <!-- Footer -->
-    <section class="text-center text-xs text-gray-500">
-      <p>No personal data is collected. Values are saved only in your browser via localStorage.</p>
-    </section>
   </main>
 
+  <footer class="text-center text-[11px] text-gray-400 py-6">
+    © DIPBL Organizer. Theme inspired by <span class="text-[var(--inferno-gold)]">Dante’s Inferno</span>.
+  </footer>
+
   <script>
-    // ---------- Helpers ----------
-    const clampNum = (v, min, max) => isNaN(v) ? min : Math.max(min, Math.min(max, v));
-    const getNum = (el, min=0) => {
-      const v = parseFloat(el.value);
-      const clamped = Math.max(min, isNaN(v) ? min : v);
-      el.value = clamped;
-      return clamped;
-    };
-    const toPNG = (chart, filename) => {
-      const url = chart.toBase64Image ? chart.toBase64Image() : chart.canvas.toDataURL("image/png");
-      const a = document.createElement('a');
-      a.href = url; a.download = filename; a.click();
-    };
+    /* =========================
+       Core Utilities & Storage
+       ========================= */
+    const PREFIX = 'dipbl_v2_';
+    const $ = sel => document.querySelector(sel);
+    const $$ = sel => Array.from(document.querySelectorAll(sel));
+    const save = (k, v) => { try { localStorage.setItem(PREFIX + k, v); } catch(e){} };
+    const load = (k, d='') => { try { return localStorage.getItem(PREFIX + k) ?? d; } catch(e){ return d; } };
+    const saveJSON = (k, obj) => save(k, JSON.stringify(obj));
+    const loadJSON = (k, d=[]) => { try { const v = JSON.parse(load(k)); return Array.isArray(v) ? v : d; } catch(e){ return d; } };
+    const toInt = (v, min=0) => { v = parseFloat(v); return isNaN(v) ? min : Math.max(min, v); };
 
-    // ---------- Defaults ----------
-    const DEFAULTS = {
-      time: [3, 3, 3, 1],             // weeks for [Design, Calibrate, Co-Manage, Debrief]
-      tasks: [6, 10, 5, 3],           // counts for [Research, Build, Test, Present]
-      res: [4, 6, 3, 5],              // hours for [Mentor, Lab, Reading, Practice]
-    };
+    /* =========================
+       Charts (compact strip)
+       ========================= */
+    // Load or defaults
+    const timeVals = loadJSON('time', [3,3,3,1]);
+    const taskVals = loadJSON('tasks', [6,10,5,3]);
+    const resVals  = loadJSON('res',  [4,6,3,5]);
 
-    // ---------- Local Storage Keys ----------
-    const KEYS = {
-      time: 'dashboard_timeData_v1',
-      tasks: 'dashboard_taskData_v1',
-      res: 'dashboard_resourceData_v1',
-    };
-
-    // ---------- Elements ----------
-    // Time
-    const elTime = {
-      design: document.getElementById('time-design'),
-      calibrate: document.getElementById('time-calibrate'),
-      comanage: document.getElementById('time-comanage'),
-      debrief: document.getElementById('time-debrief'),
-      export: document.getElementById('timeExport'),
-      reset: document.getElementById('timeReset'),
-      canvas: document.getElementById('timeAllocationChart'),
-    };
-
-    // Tasks
-    const elTask = {
-      research: document.getElementById('task-research'),
-      build: document.getElementById('task-build'),
-      test: document.getElementById('task-test'),
-      present: document.getElementById('task-present'),
-      export: document.getElementById('taskExport'),
-      reset: document.getElementById('taskReset'),
-      canvas: document.getElementById('taskDistributionChart'),
-    };
-
-    // Resources
-    const elRes = {
-      mentor: document.getElementById('res-mentor'),
-      lab: document.getElementById('res-lab'),
-      reading: document.getElementById('res-reading'),
-      practice: document.getElementById('res-practice'),
-      export: document.getElementById('resExport'),
-      reset: document.getElementById('resReset'),
-      canvas: document.getElementById('resourceChart'),
-    };
-
-    // Global
-    const btnResetAll = document.getElementById('resetAll');
-    const btnClearStorage = document.getElementById('clearStorage');
-
-    // ---------- State Load/Save ----------
-    const loadArray = (key, fallback) => {
-      try {
-        const raw = localStorage.getItem(key);
-        const arr = JSON.parse(raw);
-        return Array.isArray(arr) && arr.length === fallback.length ? arr : fallback.slice();
-      } catch {
-        return fallback.slice();
-      }
-    };
-
-    const saveArray = (key, arr) => {
-      try { localStorage.setItem(key, JSON.stringify(arr)); } catch {}
-    };
-
-    // ---------- Initialize Inputs from Storage ----------
-    const timeData = loadArray(KEYS.time, DEFAULTS.time);
-    elTime.design.value = timeData[0];
-    elTime.calibrate.value = timeData[1];
-    elTime.comanage.value = timeData[2];
-    elTime.debrief.value = timeData[3];
-
-    const taskData = loadArray(KEYS.tasks, DEFAULTS.tasks);
-    elTask.research.value = taskData[0];
-    elTask.build.value = taskData[1];
-    elTask.test.value = taskData[2];
-    elTask.present.value = taskData[3];
-
-    const resData = loadArray(KEYS.res, DEFAULTS.res);
-    elRes.mentor.value = resData[0];
-    elRes.lab.value = resData[1];
-    elRes.reading.value = resData[2];
-    elRes.practice.value = resData[3];
-
-    // ---------- Build Charts ----------
-    const timeChart = new Chart(elTime.canvas.getContext('2d'), {
+    // Build charts
+    const timeChart = new Chart($('#timeChart').getContext('2d'), {
       type: 'bar',
-      data: {
-        labels: ['Design', 'Calibrate', 'Co-Manage', 'Debrief'],
-        datasets: [{
-          label: 'Weeks',
-          data: timeData,
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        scales: { y: { beginAtZero: true, ticks: { precision: 0 } } },
-        plugins: { legend: { display: false } }
-      }
+      data: { labels: ['Design','Calibrate','Co-Manage','Debrief'],
+        datasets: [{ label:'Weeks', data: timeVals, borderWidth:1 }] },
+      options: { responsive:true, maintainAspectRatio:false,
+        scales:{ y:{ beginAtZero:true, ticks:{ precision:0 } } },
+        plugins:{ legend:{ display:false } } }
     });
 
-    const taskChart = new Chart(elTask.canvas.getContext('2d'), {
+    const taskChart = new Chart($('#taskChart').getContext('2d'), {
       type: 'doughnut',
-      data: {
-        labels: ['Research', 'Build', 'Test', 'Present'],
-        datasets: [{
-          label: 'Tasks',
-          data: taskData
-        }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { position: 'bottom' } }
-      }
+      data: { labels: ['Research','Build','Test','Present'],
+        datasets: [{ label:'Tasks', data: taskVals }] },
+      options: { responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ position:'bottom', labels:{ color:'#e5e7eb' } } } }
     });
 
-    const resChart = new Chart(elRes.canvas.getContext('2d'), {
+    const resChart = new Chart($('#resChart').getContext('2d'), {
       type: 'line',
-      data: {
-        labels: ['Mentor', 'Lab/Tools', 'Reading', 'Practice'],
-        datasets: [{
-          label: 'Hours',
-          data: resData,
-          tension: 0.25,
-          fill: false
-        }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        scales: { y: { beginAtZero: true } },
-        plugins: { legend: { display: false } }
-      }
+      data: { labels: ['Mentor','Lab/Tools','Reading','Practice'],
+        datasets: [{ label:'Hours', data: resVals, tension:0.25, fill:false }] },
+      options: { responsive:true, maintainAspectRatio:false,
+        scales:{ y:{ beginAtZero:true } },
+        plugins:{ legend:{ display:false } } }
     });
 
-    // ---------- Wiring: inputs -> charts -> storage ----------
-    const bindInputs = (inputs, chart, key, min=0) => {
-      const toArray = () => inputs.map(el => getNum(el, min));
-      const update = () => {
-        const arr = toArray();
+    // Inputs -> charts -> storage
+    const bindNumInput = (id, arr, idx, chart, key) => {
+      const el = $(id);
+      if (!el) return;
+      el.value = arr[idx];
+      el.addEventListener('input', () => {
+        arr[idx] = toInt(el.value, 0);
         chart.data.datasets[0].data = arr;
         chart.update();
-        saveArray(key, arr);
-      };
-      inputs.forEach(el => el.addEventListener('input', update));
-      return { update };
+        saveJSON(key, arr);
+      });
     };
 
-    const timeBinding = bindInputs(
-      [elTime.design, elTime.calibrate, elTime.comanage, elTime.debrief],
-      timeChart,
-      KEYS.time,
-      0
-    );
+    bindNumInput('#t-design', timeVals, 0, timeChart, 'time');
+    bindNumInput('#t-cal',    timeVals, 1, timeChart, 'time');
+    bindNumInput('#t-co',     timeVals, 2, timeChart, 'time');
+    bindNumInput('#t-deb',    timeVals, 3, timeChart, 'time');
 
-    const taskBinding = bindInputs(
-      [elTask.research, elTask.build, elTask.test, elTask.present],
-      taskChart,
-      KEYS.tasks,
-      0
-    );
+    bindNumInput('#k-research', taskVals, 0, taskChart, 'tasks');
+    bindNumInput('#k-build',    taskVals, 1, taskChart, 'tasks');
+    bindNumInput('#k-test',     taskVals, 2, taskChart, 'tasks');
+    bindNumInput('#k-present',  taskVals, 3, taskChart, 'tasks');
 
-    const resBinding = bindInputs(
-      [elRes.mentor, elRes.lab, elRes.reading, elRes.practice],
-      resChart,
-      KEYS.res,
-      0
-    );
+    bindNumInput('#r-mentor',   resVals, 0, resChart, 'res');
+    bindNumInput('#r-lab',      resVals, 1, resChart, 'res');
+    bindNumInput('#r-reading',  resVals, 2, resChart, 'res');
+    bindNumInput('#r-practice', resVals, 3, resChart, 'res');
 
-    // Initial normalize & update (ensures valid numbers)
-    timeBinding.update();
-    taskBinding.update();
-    resBinding.update();
+    // PNG export
+    const toPNG = (chart, filename) => {
+      const url = chart.toBase64Image ? chart.toBase64Image() : chart.canvas.toDataURL('image/png');
+      const a = document.createElement('a'); a.href = url; a.download = filename; a.click();
+    };
+    $('#timeExport').addEventListener('click', ()=>toPNG(timeChart,'time-allocation.png'));
+    $('#taskExport').addEventListener('click', ()=>toPNG(taskChart,'task-distribution.png'));
+    $('#resExport').addEventListener('click',  ()=>toPNG(resChart,'resources-hours.png'));
 
-    // ---------- Export buttons ----------
-    elTime.export.addEventListener('click', () => toPNG(timeChart, 'time-allocation.png'));
-    elTask.export.addEventListener('click', () => toPNG(taskChart, 'task-distribution.png'));
-    elRes.export.addEventListener('click', () => toPNG(resChart, 'resources-used.png'));
+    /* =========================
+       Notes (Hats + Lenses)
+       ========================= */
+    const textAreas = [
+      'hat-white','hat-red','hat-black','hat-yellow','hat-green','hat-blue',
+      'lens-dante','lens-art','lens-community'
+    ];
 
-    // ---------- Reset buttons ----------
-    const writeInputs = (els, vals) => els.forEach((el, i) => el.value = vals[i]);
+    // Initialize values and counters
+    const wordCount = s => (s.trim().length ? s.trim().split(/\s+/).length : 0);
 
-    elTime.reset.addEventListener('click', () => {
-      writeInputs([elTime.design, elTime.calibrate, elTime.comanage, elTime.debrief], DEFAULTS.time);
-      timeBinding.update();
+    textAreas.forEach(id => {
+      const el = $('#'+id);
+      const saved = load(id, '');
+      if (saved) el.value = saved;
+      const counter = document.querySelector(`.count[data-for="${id}"]`);
+      const updateCount = () => { if (counter) counter.textContent = `${wordCount(el.value)} words`; };
+      updateCount();
+
+      let t = null;
+      el.addEventListener('input', () => {
+        clearTimeout(t);
+        t = setTimeout(() => {
+          save(id, el.value);
+          updateCount();
+        }, 200); // debounce for smoother typing
+      });
     });
 
-    elTask.reset.addEventListener('click', () => {
-      writeInputs([elTask.research, elTask.build, elTask.test, elTask.present], DEFAULTS.tasks);
-      taskBinding.update();
+    /* =========================
+       Export / Clear
+       ========================= */
+    $('#exportNotes').addEventListener('click', () => {
+      const lines = [];
+      const push = (h, id) => {
+        const val = load(id, '');
+        lines.push(`\n=== ${h} ===\n${val || ''}`);
+      };
+
+      push('Six Hats · White (Facts)', 'hat-white');
+      push('Six Hats · Red (Feelings)', 'hat-red');
+      push('Six Hats · Black (Cautions)', 'hat-black');
+      push('Six Hats · Yellow (Benefits)', 'hat-yellow');
+      push('Six Hats · Green (Ideas)', 'hat-green');
+      push('Six Hats · Blue (Process)', 'hat-blue');
+
+      push('Lens · Dante', 'lens-dante');
+      push('Lens · Contemporary Art', 'lens-art');
+      push('Lens · Community Action', 'lens-community');
+
+      const blob = new Blob([lines.join('\n')], {type:'text/plain'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'dipbl_notes.txt'; a.click();
+      URL.revokeObjectURL(url);
     });
 
-    elRes.reset.addEventListener('click', () => {
-      writeInputs([elRes.mentor, elRes.lab, elRes.reading, elRes.practice], DEFAULTS.res);
-      resBinding.update();
-    });
-
-    // ---------- Global controls ----------
-    btnResetAll.addEventListener('click', () => {
-      // reset inputs to defaults
-      elTime.reset.click();
-      elTask.reset.click();
-      elRes.reset.click();
-    });
-
-    btnClearStorage.addEventListener('click', () => {
-      try {
-        localStorage.removeItem(KEYS.time);
-        localStorage.removeItem(KEYS.tasks);
-        localStorage.removeItem(KEYS.res);
-        alert('Saved data cleared for this page.\nYour charts now reflect the current inputs.');
-      } catch {
-        alert('Could not clear saved data (localStorage may be blocked).');
+    $('#clearAll').addEventListener('click', () => {
+      if (!confirm('Clear all saved data for this page on this device?')) return;
+      const keys = [];
+      for (let i=0;i<localStorage.length;i++){
+        const k = localStorage.key(i);
+        if (k && k.startsWith(PREFIX)) keys.push(k);
       }
+      keys.forEach(k => localStorage.removeItem(k));
+      location.reload();
     });
   </script>
 </body>
