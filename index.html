@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DIPBL · Journey Into Dante's World</title>
+  <title>Dante’s Inferno PBL Organizer — Part 1</title>
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -41,7 +41,7 @@
       background: linear-gradient(90deg, transparent, var(--inferno-ember), var(--inferno-gold), var(--inferno-ember), transparent);
       filter: drop-shadow(0 0 6px rgba(196,62,47,.45));
     }
-    textarea, input[type="text"] {
+    textarea {
       resize: vertical;
       min-height: 5.5rem;
       background: rgba(255,255,255,.06);
@@ -59,6 +59,18 @@
       background: linear-gradient(90deg, rgba(200,164,93,.25), rgba(196,62,47,.25));
       border: 1px solid rgba(200,164,93,.35);
     }
+    .tabs {
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.1);
+    }
+    .tab {
+      background: linear-gradient(180deg, rgba(200,164,93,.14), rgba(200,164,93,.08));
+      border: 1px solid rgba(200,164,93,.35);
+      color: #f8f5ec;
+      transition: transform .05s ease-in-out;
+    }
+    .tab:hover { transform: translateY(-1px); }
+    .tab:active { transform: translateY(0); }
   </style>
 </head>
 <body class="text-gray-100 font-[Crimson_Text] min-h-full">
@@ -66,326 +78,629 @@
   <!-- Header -->
   <header class="hdr text-center py-10 shadow-xl">
     <h1 class="font-[Cinzel] text-3xl md:text-5xl font-extrabold text-[var(--inferno-gold)] title-shadow">
-      Journey Into Dante's World
+      Dante’s Inferno PBL Organizer — Part 1
     </h1>
-    <p class="mt-2 text-sm md:text-base text-gray-200/90">Stations organizer + Six Thinking Hats for Section 1. All notes auto-save locally.</p>
+    <p class="mt-2 text-sm md:text-base text-gray-200/90">Stations organizer + Six Thinking Hats for three sections. Notes auto-save locally.</p>
     <div class="mx-auto mt-6 max-w-5xl flame-divider rounded-full"></div>
   </header>
 
-  <main class="max-w-6xl mx-auto px-4 md:px-6 py-8 space-y-10">
+  <!-- Big Tabs -->
+  <nav class="max-w-6xl mx-auto px-4 md:px-6 pt-6">
+    <div class="tabs rounded-2xl p-3 flex flex-wrap gap-3 justify-center">
+      <a href="#sec1" class="tab px-5 py-3 rounded-full text-sm md:text-base font-[Cinzel]">Section 1: Journey Into Dante's World</a>
+      <a href="#sec2" class="tab px-5 py-3 rounded-full text-sm md:text-base font-[Cinzel]">Section 2: Classical Literature in Modern Music</a>
+      <a href="#sec3" class="tab px-5 py-3 rounded-full text-sm md:text-base font-[Cinzel]">Section 3: Medieval Catholic Theology</a>
+    </div>
+  </nav>
 
-    <!-- Quick Nav -->
-    <section class="flex flex-wrap gap-2 items-center justify-between">
-      <div class="text-xs sectionBadge px-3 py-1 rounded-full text-[var(--parchment)]">Section 1 Organizer</div>
-      <nav class="text-xs flex flex-wrap gap-2">
-        <a href="#s1" class="underline/50 hover:underline">Stations</a>
-        <span>•</span>
-        <a href="#hats" class="underline/50 hover:underline">Six Thinking Hats</a>
-      </nav>
-    </section>
+  <main class="max-w-6xl mx-auto px-4 md:px-6 py-8 space-y-14">
 
-    <!-- Stations -->
-    <section id="s1" class="space-y-6">
-      <h2 class="font-[Cinzel] text-2xl text-[var(--inferno-gold)]">Stations</h2>
+    <!-- ======================== -->
+    <!-- SECTION 1                -->
+    <!-- ======================== -->
+    <section id="sec1" class="space-y-8">
+      <header class="flex items-center gap-3">
+        <div class="text-xs sectionBadge px-3 py-1 rounded-full text-[var(--parchment)]">Section 1 Organizer</div>
+        <h2 class="font-[Cinzel] text-2xl text-[var(--inferno-gold)]">Journey Into Dante's World</h2>
+      </header>
 
-      <!-- Station template repeated with unique keys -->
-      <!-- Station 1 -->
-      <article class="parchment rounded-2xl p-5">
-        <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 1: Political Exile &amp; Power — Florence's Factional Warfare</h3>
-        <p class="text-sm text-gray-900/80 mb-3">Context, factions (Guelphs/Ghibellines, Whites/Blacks), exile, power structures shaping Dante’s worldview.</p>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <label class="block text-sm">
-            <span class="opacity-80">Key Ideas</span>
-            <textarea data-key="sec1_s1_ideas" placeholder="Summarize the core historical/political dynamics…"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s1_ideas"></span></div>
-          </label>
-
-          <label class="block text-sm">
-            <span class="opacity-80">Evidence / Quotes</span>
-            <textarea data-key="sec1_s1_evidence" placeholder="Quotations or citations with canto/line references…"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s1_evidence"></span></div>
-          </label>
-
-          <label class="block text-sm md:col-span-2">
-            <span class="opacity-80">Connections &amp; Implications</span>
-            <textarea data-key="sec1_s1_connections" placeholder="Connections to themes of justice, leadership, exile, loyalty…"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s1_connections"></span></div>
-          </label>
-
-          <label class="block text-sm md:col-span-2">
-            <span class="opacity-80">Questions</span>
-            <textarea data-key="sec1_s1_questions" placeholder="What remains unclear? What would you ask a historian?"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s1_questions"></span></div>
-          </label>
-        </div>
-      </article>
-
-      <!-- Station 2 -->
-      <article class="parchment rounded-2xl p-5">
-        <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 2: Scholastic Philosophy Meets Poetic Vision</h3>
-        <p class="text-sm text-gray-900/80 mb-3">Aristotelian/Thomistic frameworks intersecting with poetic allegory and theological imagination.</p>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <label class="block text-sm">
-            <span class="opacity-80">Key Ideas</span>
-            <textarea data-key="sec1_s2_ideas" placeholder="Virtue ethics, teleology, reason/revelation interplay…"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s2_ideas"></span></div>
-          </label>
-
-          <label class="block text-sm">
-            <span class="opacity-80">Evidence / Quotes</span>
-            <textarea data-key="sec1_s2_evidence" placeholder="Lines, commentators, scholastic references…"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s2_evidence"></span></div>
-          </label>
-
-          <label class="block text-sm md:col-span-2">
-            <span class="opacity-80">Connections &amp; Implications</span>
-            <textarea data-key="sec1_s2_connections" placeholder="How philosophical frameworks structure moral judgment in the poem…"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s2_connections"></span></div>
-          </label>
-
-          <label class="block text-sm md:col-span-2">
-            <span class="opacity-80">Questions</span>
-            <textarea data-key="sec1_s2_questions" placeholder="What tensions arise between doctrine and art?"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s2_questions"></span></div>
-          </label>
-        </div>
-      </article>
-
-      <!-- Station 3 -->
-      <article class="parchment rounded-2xl p-5">
-        <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 3: Moral Architecture — Sin as Cosmic Disorder</h3>
-        <p class="text-sm text-gray-900/80 mb-3">The structure of Hell as a moral map (continence, incontinence, violence, fraud, treachery).</p>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <label class="block text-sm">
-            <span class="opacity-80">Key Ideas</span>
-            <textarea data-key="sec1_s3_ideas" placeholder="Ordering of sins, contrapasso, justice/mercy tensions…"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s3_ideas"></span></div>
-          </label>
-
-          <label class="block text-sm">
-            <span class="opacity-80">Evidence / Quotes</span>
-            <textarea data-key="sec1_s3_evidence" placeholder="Episodes, figures, punishments, structural markers…"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s3_evidence"></span></div>
-          </label>
-
-          <label class="block text-sm md:col-span-2">
-            <span class="opacity-80">Connections &amp; Implications</span>
-            <textarea data-key="sec1_s3_connections" placeholder="How moral order reflects cosmic order and civic ethics…"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s3_connections"></span></div>
-          </label>
-
-          <label class="block text-sm md:col-span-2">
-            <span class="opacity-80">Questions</span>
-            <textarea data-key="sec1_s3_questions" placeholder="Which boundary cases feel ambiguous and why?"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s3_questions"></span></div>
-          </label>
-        </div>
-      </article>
-
-      <!-- Station 4 -->
-      <article class="parchment rounded-2xl p-5">
-        <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 4: Intertextuality &amp; Literary Synthesis</h3>
-        <p class="text-sm text-gray-900/80 mb-3">Dialogues with Virgil, Ovid, Scripture, classical &amp; medieval sources woven into Dante’s epic.</p>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <label class="block text-sm">
-            <span class="opacity-80">Key Ideas</span>
-            <textarea data-key="sec1_s4_ideas" placeholder="Models, mentors, allusions, transformations of source material…"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s4_ideas"></span></div>
-          </label>
-
-          <label class="block text-sm">
-            <span class="opacity-80">Evidence / Quotes</span>
-            <textarea data-key="sec1_s4_evidence" placeholder="Specific intertexts and how Dante reframes them…"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s4_evidence"></span></div>
-          </label>
-
-          <label class="block text-sm md:col-span-2">
-            <span class="opacity-80">Connections &amp; Implications</span>
-            <textarea data-key="sec1_s4_connections" placeholder="What synthesis emerges? How does it shape readers’ understanding?"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s4_connections"></span></div>
-          </label>
-
-          <label class="block text-sm md:col-span-2">
-            <span class="opacity-80">Questions</span>
-            <textarea data-key="sec1_s4_questions" placeholder="What intertexts would you research further?"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s4_questions"></span></div>
-          </label>
-        </div>
-      </article>
-
-      <!-- Station 5 -->
-      <article class="parchment rounded-2xl p-5">
-        <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 5: Poetic Innovation — Language, Form, &amp; Allegory</h3>
-        <p class="text-sm text-gray-900/80 mb-3">Terza rima, vernacular elevation, narrative voice, layered allegory.</p>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <label class="block text-sm">
-            <span class="opacity-80">Key Ideas</span>
-            <textarea data-key="sec1_s5_ideas" placeholder="Form shaping meaning; stylistic choices; voice and stance…"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s5_ideas"></span></div>
-          </label>
-
-          <label class="block text-sm">
-            <span class="opacity-80">Evidence / Quotes</span>
-            <textarea data-key="sec1_s5_evidence" placeholder="Lines that illustrate form/technique producing effect…"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s5_evidence"></span></div>
-          </label>
-
-          <label class="block text-sm md:col-span-2">
-            <span class="opacity-80">Connections &amp; Implications</span>
-            <textarea data-key="sec1_s5_connections" placeholder="How innovation influences themes and reception…"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s5_connections"></span></div>
-          </label>
-
-          <label class="block text-sm md:col-span-2">
-            <span class="opacity-80">Questions</span>
-            <textarea data-key="sec1_s5_questions" placeholder="What aesthetic/interpretive puzzles remain?"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s5_questions"></span></div>
-          </label>
-        </div>
-      </article>
-
-      <!-- Station 6 -->
-      <article class="parchment rounded-2xl p-5">
-        <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 6: Research Methodology &amp; Critical Analysis</h3>
-        <p class="text-sm text-gray-900/80 mb-3">How to investigate, annotate, evaluate sources, and build an argument.</p>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <label class="block text-sm">
-            <span class="opacity-80">Key Ideas</span>
-            <textarea data-key="sec1_s6_ideas" placeholder="Approaches, frameworks, scope, search strategies…"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s6_ideas"></span></div>
-          </label>
-
-          <label class="block text-sm">
-            <span class="opacity-80">Evidence / Quotes</span>
-            <textarea data-key="sec1_s6_evidence" placeholder="Notes from sources, citations, annotations…"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s6_evidence"></span></div>
-          </label>
-
-          <label class="block text-sm md:col-span-2">
-            <span class="opacity-80">Connections &amp; Implications</span>
-            <textarea data-key="sec1_s6_connections" placeholder="How your method strengthens claims; where bias might creep in…"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s6_connections"></span></div>
-          </label>
-
-          <label class="block text-sm md:col-span-2">
-            <span class="opacity-80">Questions</span>
-            <textarea data-key="sec1_s6_questions" placeholder="What you still need to find, test, or verify…"
-              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s6_questions"></span></div>
-          </label>
-        </div>
-      </article>
-    </section>
-
-    <!-- Six Thinking Hats for the Section -->
-    <section id="hats" class="space-y-4">
-      <h2 class="font-[Cinzel] text-2xl text-[var(--inferno-gold)]">Six Thinking Hats — Section 1</h2>
-      <p class="text-sm text-gray-200/90">Use the hats to synthesize insights across Stations 1–6.</p>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div class="hat hat-white rounded-xl p-4">
-          <h3 class="font-[Cinzel] text-lg mb-2">White — Facts</h3>
-          <textarea data-key="sec1_hat_white" placeholder="Key facts, data, sources across stations…"
-            class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-          <div class="flex justify-between mt-2 text-xs">
-            <span>What do we know? What’s missing?</span><span class="count" data-for="sec1_hat_white"></span>
+      <!-- Stations -->
+      <div class="space-y-6">
+        <!-- Station 1 -->
+        <article class="parchment rounded-2xl p-5">
+          <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 1: Political Exile &amp; Power — Florence's Factional Warfare</h3>
+          <p class="text-sm text-gray-900/80 mb-3">Context, factions (Guelphs/Ghibellines, Whites/Blacks), exile, power structures shaping Dante’s worldview.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label class="block text-sm">
+              <span class="opacity-80">Key Ideas</span>
+              <textarea data-key="sec1_s1_ideas" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Core historical/political dynamics…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s1_ideas"></span></div>
+            </label>
+            <label class="block text-sm">
+              <span class="opacity-80">Evidence / Quotes</span>
+              <textarea data-key="sec1_s1_evidence" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Quotations/citations…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s1_evidence"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2">
+              <span class="opacity-80">Connections &amp; Implications</span>
+              <textarea data-key="sec1_s1_connections" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Justice, leadership, exile, loyalty…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s1_connections"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2">
+              <span class="opacity-80">Questions</span>
+              <textarea data-key="sec1_s1_questions" class="w-full rounded p-3 text-sm text-gray-900" placeholder="What remains unclear?"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s1_questions"></span></div>
+            </label>
           </div>
-        </div>
+        </article>
 
-        <div class="hat hat-red rounded-xl p-4">
-          <h3 class="font-[Cinzel] text-lg mb-2">Red — Feelings</h3>
-          <textarea data-key="sec1_hat_red" placeholder="Intuition, gut reactions, emotions…"
-            class="w-full rounded p-3 text-sm text-white/90"></textarea>
-          <div class="flex justify-between mt-2 text-xs">
-            <span>How does this feel?</span><span class="count" data-for="sec1_hat_red"></span>
+        <!-- Station 2 -->
+        <article class="parchment rounded-2xl p-5">
+          <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 2: Scholastic Philosophy Meets Poetic Vision</h3>
+          <p class="text-sm text-gray-900/80 mb-3">Aristotelian/Thomistic frameworks intersecting with poetic allegory and theological imagination.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label class="block text-sm">
+              <span class="opacity-80">Key Ideas</span>
+              <textarea data-key="sec1_s2_ideas" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Virtue ethics, teleology, reason/revelation…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s2_ideas"></span></div>
+            </label>
+            <label class="block text-sm">
+              <span class="opacity-80">Evidence / Quotes</span>
+              <textarea data-key="sec1_s2_evidence" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Lines, commentators…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s2_evidence"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2">
+              <span class="opacity-80">Connections &amp; Implications</span>
+              <textarea data-key="sec1_s2_connections" class="w-full rounded p-3 text-sm text-gray-900" placeholder="How frameworks structure moral judgment…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s2_connections"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2">
+              <span class="opacity-80">Questions</span>
+              <textarea data-key="sec1_s2_questions" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Tensions between doctrine and art?"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s2_questions"></span></div>
+            </label>
           </div>
-        </div>
+        </article>
 
-        <div class="hat hat-black rounded-xl p-4">
-          <h3 class="font-[Cinzel] text-lg mb-2">Black — Cautions</h3>
-          <textarea data-key="sec1_hat_black" placeholder="Risks, weaknesses, concerns…"
-            class="w-full rounded p-3 text-sm text-gray-100"></textarea>
-          <div class="flex justify-between mt-2 text-xs">
-            <span>What could go wrong?</span><span class="count" data-for="sec1_hat_black"></span>
+        <!-- Station 3 -->
+        <article class="parchment rounded-2xl p-5">
+          <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 3: Moral Architecture — Sin as Cosmic Disorder</h3>
+          <p class="text-sm text-gray-900/80 mb-3">Hell’s structure as moral map: continence, incontinence, violence, fraud, treachery.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label class="block text-sm">
+              <span class="opacity-80">Key Ideas</span>
+              <textarea data-key="sec1_s3_ideas" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Ordering of sins, contrapasso…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s3_ideas"></span></div>
+            </label>
+            <label class="block text-sm">
+              <span class="opacity-80">Evidence / Quotes</span>
+              <textarea data-key="sec1_s3_evidence" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Episodes, punishments…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s3_evidence"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2">
+              <span class="opacity-80">Connections &amp; Implications</span>
+              <textarea data-key="sec1_s3_connections" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Moral vs cosmic order; civic ethics…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s3_connections"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2">
+              <span class="opacity-80">Questions</span>
+              <textarea data-key="sec1_s3_questions" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Boundary cases? Why ambiguous?"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s3_questions"></span></div>
+            </label>
           </div>
-        </div>
+        </article>
 
-        <div class="hat hat-yellow rounded-xl p-4">
-          <h3 class="font-[Cinzel] text-lg mb-2">Yellow — Benefits</h3>
-          <textarea data-key="sec1_hat_yellow" placeholder="Benefits, value, opportunities…"
-            class="w-full rounded p-3 text-sm text-gray-900"></textarea>
-          <div class="flex justify-between mt-2 text-xs">
-            <span>Why is this worthwhile?</span><span class="count" data-for="sec1_hat_yellow"></span>
+        <!-- Station 4 -->
+        <article class="parchment rounded-2xl p-5">
+          <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 4: Intertextuality &amp; Literary Synthesis</h3>
+          <p class="text-sm text-gray-900/80 mb-3">Dialogues with Virgil, Ovid, Scripture, and medieval sources woven into the epic.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label class="block text-sm">
+              <span class="opacity-80">Key Ideas</span>
+              <textarea data-key="sec1_s4_ideas" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Models, mentors, allusions…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s4_ideas"></span></div>
+            </label>
+            <label class="block text-sm">
+              <span class="opacity-80">Evidence / Quotes</span>
+              <textarea data-key="sec1_s4_evidence" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Intertexts & reframing…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s4_evidence"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2">
+              <span class="opacity-80">Connections &amp; Implications</span>
+              <textarea data-key="sec1_s4_connections" class="w-full rounded p-3 text-sm text-gray-900" placeholder="What synthesis emerges?"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s4_connections"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2">
+              <span class="opacity-80">Questions</span>
+              <textarea data-key="sec1_s4_questions" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Which intertexts to research?"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s4_questions"></span></div>
+            </label>
           </div>
-        </div>
+        </article>
 
-        <div class="hat hat-green rounded-xl p-4">
-          <h3 class="font-[Cinzel] text-lg mb-2">Green — Ideas</h3>
-          <textarea data-key="sec1_hat_green" placeholder="Alternatives, creative angles, variations…"
-            class="w-full rounded p-3 text-sm text-emerald-50"></textarea>
-          <div class="flex justify-between mt-2 text-xs">
-            <span>What else could we try?</span><span class="count" data-for="sec1_hat_green"></span>
+        <!-- Station 5 -->
+        <article class="parchment rounded-2xl p-5">
+          <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 5: Poetic Innovation — Language, Form, &amp; Allegory</h3>
+          <p class="text-sm text-gray-900/80 mb-3">Terza rima, vernacular elevation, voice, layered allegory.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label class="block text-sm">
+              <span class="opacity-80">Key Ideas</span>
+              <textarea data-key="sec1_s5_ideas" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Form shaping meaning…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s5_ideas"></span></div>
+            </label>
+            <label class="block text-sm">
+              <span class="opacity-80">Evidence / Quotes</span>
+              <textarea data-key="sec1_s5_evidence" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Lines illustrating technique…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s5_evidence"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2">
+              <span class="opacity-80">Connections &amp; Implications</span>
+              <textarea data-key="sec1_s5_connections" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Innovation & themes…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s5_connections"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2">
+              <span class="opacity-80">Questions</span>
+              <textarea data-key="sec1_s5_questions" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Aesthetic puzzles…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s5_questions"></span></div>
+            </label>
           </div>
-        </div>
+        </article>
 
-        <div class="hat hat-blue rounded-xl p-4">
-          <h3 class="font-[Cinzel] text-lg mb-2">Blue — Process</h3>
-          <textarea data-key="sec1_hat_blue" placeholder="Next steps, process, roles, timeline…"
-            class="w-full rounded p-3 text-sm text-slate-100"></textarea>
-          <div class="flex justify-between mt-2 text-xs">
-            <span>How do we manage it?</span><span class="count" data-for="sec1_hat_blue"></span>
+        <!-- Station 6 -->
+        <article class="parchment rounded-2xl p-5">
+          <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 6: Research Methodology &amp; Critical Analysis</h3>
+          <p class="text-sm text-gray-900/80 mb-3">Investigate, annotate, evaluate sources, and build an argument.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label class="block text-sm">
+              <span class="opacity-80">Key Ideas</span>
+              <textarea data-key="sec1_s6_ideas" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Approaches, frameworks…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s6_ideas"></span></div>
+            </label>
+            <label class="block text-sm">
+              <span class="opacity-80">Evidence / Quotes</span>
+              <textarea data-key="sec1_s6_evidence" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Notes, citations…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s6_evidence"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2">
+              <span class="opacity-80">Connections &amp; Implications</span>
+              <textarea data-key="sec1_s6_connections" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Strengths, biases, limits…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s6_connections"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2">
+              <span class="opacity-80">Questions</span>
+              <textarea data-key="sec1_s6_questions" class="w-full rounded p-3 text-sm text-gray-900" placeholder="What to find/test/verify…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s6_questions"></span></div>
+            </label>
           </div>
-        </div>
+        </article>
       </div>
+
+      <!-- Six Hats -->
+      <section class="space-y-4">
+        <h3 class="font-[Cinzel] text-2xl text-[var(--inferno-gold)]">Six Thinking Hats — Section 1</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="hat hat-white rounded-xl p-4">
+            <h4 class="font-[Cinzel] text-lg mb-2">White — Facts</h4>
+            <textarea data-key="sec1_hat_white" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Key facts, data, sources…"></textarea>
+            <div class="flex justify-between mt-2 text-xs">
+              <span>What do we know? What’s missing?</span><span class="count" data-for="sec1_hat_white"></span>
+            </div>
+          </div>
+          <div class="hat hat-red rounded-xl p-4">
+            <h4 class="font-[Cinzel] text-lg mb-2">Red — Feelings</h4>
+            <textarea data-key="sec1_hat_red" class="w-full rounded p-3 text-sm text-white/90" placeholder="Emotions, gut feelings…"></textarea>
+            <div class="flex justify-between mt-2 text-xs">
+              <span>How does this feel?</span><span class="count" data-for="sec1_hat_red"></span>
+            </div>
+          </div>
+          <div class="hat hat-black rounded-xl p-4">
+            <h4 class="font-[Cinzel] text-lg mb-2">Black — Cautions</h4>
+            <textarea data-key="sec1_hat_black" class="w-full rounded p-3 text-sm text-gray-100" placeholder="Risks, weaknesses…"></textarea>
+            <div class="flex justify-between mt-2 text-xs">
+              <span>What could go wrong?</span><span class="count" data-for="sec1_hat_black"></span>
+            </div>
+          </div>
+          <div class="hat hat-yellow rounded-xl p-4">
+            <h4 class="font-[Cinzel] text-lg mb-2">Yellow — Benefits</h4>
+            <textarea data-key="sec1_hat_yellow" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Benefits, value…"></textarea>
+            <div class="flex justify-between mt-2 text-xs">
+              <span>Why is this worthwhile?</span><span class="count" data-for="sec1_hat_yellow"></span>
+            </div>
+          </div>
+          <div class="hat hat-green rounded-xl p-4">
+            <h4 class="font-[Cinzel] text-lg mb-2">Green — Ideas</h4>
+            <textarea data-key="sec1_hat_green" class="w-full rounded p-3 text-sm text-emerald-50" placeholder="Alternatives, creative angles…"></textarea>
+            <div class="flex justify-between mt-2 text-xs">
+              <span>What else could we try?</span><span class="count" data-for="sec1_hat_green"></span>
+            </div>
+          </div>
+          <div class="hat hat-blue rounded-xl p-4">
+            <h4 class="font-[Cinzel] text-lg mb-2">Blue — Process</h4>
+            <textarea data-key="sec1_hat_blue" class="w-full rounded p-3 text-sm text-slate-100" placeholder="Next steps, roles, timeline…"></textarea>
+            <div class="flex justify-between mt-2 text-xs">
+              <span>How do we manage it?</span><span class="count" data-for="sec1_hat_blue"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Actions -->
+      <section class="flex flex-wrap items-center gap-3 justify-between">
+        <div class="text-xs text-gray-300">No personal data is collected. All entries stay in your browser.</div>
+        <div class="flex gap-2">
+          <button data-export="sec1" class="export-btn px-3 py-2 rounded bg-[var(--inferno-ember)] text-white hover:brightness-110">Download Section 1 Notes (.txt)</button>
+          <button data-clear="sec1" class="clear-btn px-3 py-2 rounded bg-black/40 hover:bg-black/60 border border-white/10">Clear Section 1 Data</button>
+        </div>
+      </section>
     </section>
 
-    <!-- Actions -->
-    <section class="flex flex-wrap items-center gap-3 justify-between">
-      <div class="text-xs text-gray-300">No personal data is collected. All entries stay in your browser.</div>
-      <div class="flex gap-2">
-        <button id="exportSection1" class="px-3 py-2 rounded bg-[var(--inferno-ember)] text-white hover:brightness-110">Download Section 1 Notes (.txt)</button>
-        <button id="clearSection1" class="px-3 py-2 rounded bg-black/40 hover:bg-black/60 border border-white/10">Clear Section 1 Data</button>
+    <!-- ======================== -->
+    <!-- SECTION 2                -->
+    <!-- ======================== -->
+    <section id="sec2" class="space-y-8">
+      <header class="flex items-center gap-3">
+        <div class="text-xs sectionBadge px-3 py-1 rounded-full text-[var(--parchment)]">Section 2 Organizer</div>
+        <h2 class="font-[Cinzel] text-2xl text-[var(--inferno-gold)]">Classical Literature in Modern Music</h2>
+      </header>
+
+      <!-- Stations -->
+      <div class="space-y-6">
+        <!-- S2 Station 1 -->
+        <article class="parchment rounded-2xl p-5">
+          <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 1: Epic Journeys in Rock Music</h3>
+          <p class="text-sm text-gray-900/80 mb-3">Odysseys, quests, and pilgrimage motifs in rock narratives.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label class="block text-sm"><span class="opacity-80">Key Ideas</span>
+              <textarea data-key="sec2_s1_ideas" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Journey arcs, heroic trials…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s1_ideas"></span></div>
+            </label>
+            <label class="block text-sm"><span class="opacity-80">Evidence / Quotes</span>
+              <textarea data-key="sec2_s1_evidence" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Lyrics, albums, artists…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s1_evidence"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2"><span class="opacity-80">Connections &amp; Implications</span>
+              <textarea data-key="sec2_s1_connections" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Why journeys resonate today…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s1_connections"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2"><span class="opacity-80">Questions</span>
+              <textarea data-key="sec2_s1_questions" class="w-full rounded p-3 text-sm text-gray-900" placeholder="What’s unclear or debated?"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s1_questions"></span></div>
+            </label>
+          </div>
+        </article>
+
+        <!-- S2 Station 2 -->
+        <article class="parchment rounded-2xl p-5">
+          <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 2: Mythological References in Contemporary Music</h3>
+          <p class="text-sm text-gray-900/80 mb-3">Greek/Roman motifs, gods, and myths sampled by modern artists.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label class="block text-sm"><span class="opacity-80">Key Ideas</span>
+              <textarea data-key="sec2_s2_ideas" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Symbolic meanings, remixing myths…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s2_ideas"></span></div>
+            </label>
+            <label class="block text-sm"><span class="opacity-80">Evidence / Quotes</span>
+              <textarea data-key="sec2_s2_evidence" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Song/artist references…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s2_evidence"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2"><span class="opacity-80">Connections &amp; Implications</span>
+              <textarea data-key="sec2_s2_connections" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Cultural currency of myth today…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s2_connections"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2"><span class="opacity-80">Questions</span>
+              <textarea data-key="sec2_s2_questions" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Where else do we see this?"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s2_questions"></span></div>
+            </label>
+          </div>
+        </article>
+
+        <!-- S2 Station 3 -->
+        <article class="parchment rounded-2xl p-5">
+          <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 3: Hell and Damnation in Popular Culture</h3>
+          <p class="text-sm text-gray-900/80 mb-3">Imagery of punishment/redemption across genres and media.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label class="block text-sm"><span class="opacity-80">Key Ideas</span>
+              <textarea data-key="sec2_s3_ideas" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Visual tropes, lyrical themes…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s3_ideas"></span></div>
+            </label>
+            <label class="block text-sm"><span class="opacity-80">Evidence / Quotes</span>
+              <textarea data-key="sec2_s3_evidence" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Examples across media…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s3_evidence"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2"><span class="opacity-80">Connections &amp; Implications</span>
+              <textarea data-key="sec2_s3_connections" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Why these images persist…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s3_connections"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2"><span class="opacity-80">Questions</span>
+              <textarea data-key="sec2_s3_questions" class="w-full rounded p-3 text-sm text-gray-900" placeholder="What’s problematic or powerful?"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s3_questions"></span></div>
+            </label>
+          </div>
+        </article>
+
+        <!-- S2 Station 4 -->
+        <article class="parchment rounded-2xl p-5">
+          <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 4: Love and Loss in Literary Music</h3>
+          <p class="text-sm text-gray-900/80 mb-3">Intertextual love narratives, elegy, and catharsis in songs.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label class="block text-sm"><span class="opacity-80">Key Ideas</span>
+              <textarea data-key="sec2_s4_ideas" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Motifs, narrative arcs…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s4_ideas"></span></div>
+            </label>
+            <label class="block text-sm"><span class="opacity-80">Evidence / Quotes</span>
+              <textarea data-key="sec2_s4_evidence" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Lyrics, references…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s4_evidence"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2"><span class="opacity-80">Connections &amp; Implications</span>
+              <textarea data-key="sec2_s4_connections" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Audience reception, themes…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s4_connections"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2"><span class="opacity-80">Questions</span>
+              <textarea data-key="sec2_s4_questions" class="w-full rounded p-3 text-sm text-gray-900" placeholder="What to analyze next?"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s4_questions"></span></div>
+            </label>
+          </div>
+        </article>
+
+        <!-- S2 Station 5 -->
+        <article class="parchment rounded-2xl p-5">
+          <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 5: Contemporary Artists and Classical Education</h3>
+          <p class="text-sm text-gray-900/80 mb-3">How training in classics shapes musical craft and themes.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label class="block text-sm"><span class="opacity-80">Key Ideas</span>
+              <textarea data-key="sec2_s5_ideas" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Education, influence, technique…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s5_ideas"></span></div>
+            </label>
+            <label class="block text-sm"><span class="opacity-80">Evidence / Quotes</span>
+              <textarea data-key="sec2_s5_evidence" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Artist statements, interviews…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s5_evidence"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2"><span class="opacity-80">Connections &amp; Implications</span>
+              <textarea data-key="sec2_s5_connections" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Impact on themes/audience…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s5_connections"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2"><span class="opacity-80">Questions</span>
+              <textarea data-key="sec2_s5_questions" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Follow-up research?"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s5_questions"></span></div>
+            </label>
+          </div>
+        </article>
+
+        <!-- S2 Station 6 -->
+        <article class="parchment rounded-2xl p-5">
+          <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 6: Hozier’s “Unreal Unearth” — A Modern Inferno</h3>
+          <p class="text-sm text-gray-900/80 mb-3">Album as contemporary descent/return narrative; infernal echoes.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label class="block text-sm"><span class="opacity-80">Key Ideas</span>
+              <textarea data-key="sec2_s6_ideas" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Infernal structure, themes…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s6_ideas"></span></div>
+            </label>
+            <label class="block text-sm"><span class="opacity-80">Evidence / Quotes</span>
+              <textarea data-key="sec2_s6_evidence" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Tracks, lyrics, interviews…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s6_evidence"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2"><span class="opacity-80">Connections &amp; Implications</span>
+              <textarea data-key="sec2_s6_connections" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Why this adaptation matters…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s6_connections"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2"><span class="opacity-80">Questions</span>
+              <textarea data-key="sec2_s6_questions" class="w-full rounded p-3 text-sm text-gray-900" placeholder="What to compare next?"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec2_s6_questions"></span></div>
+            </label>
+          </div>
+        </article>
       </div>
+
+      <!-- Six Hats -->
+      <section class="space-y-4">
+        <h3 class="font-[Cinzel] text-2xl text-[var(--inferno-gold)]">Six Thinking Hats — Section 2</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="hat hat-white rounded-xl p-4">
+            <h4 class="font-[Cinzel] text-lg mb-2">White — Facts</h4>
+            <textarea data-key="sec2_hat_white" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Key facts, data, sources…"></textarea>
+            <div class="flex justify-between mt-2 text-xs"><span>What do we know?</span><span class="count" data-for="sec2_hat_white"></span></div>
+          </div>
+          <div class="hat hat-red rounded-xl p-4">
+            <h4 class="font-[Cinzel] text-lg mb-2">Red — Feelings</h4>
+            <textarea data-key="sec2_hat_red" class="w-full rounded p-3 text-sm text-white/90" placeholder="Emotions, gut feelings…"></textarea>
+            <div class="flex justify-between mt-2 text-xs"><span>How does this feel?</span><span class="count" data-for="sec2_hat_red"></span></div>
+          </div>
+          <div class="hat hat-black rounded-xl p-4">
+            <h4 class="font-[Cinzel] text-lg mb-2">Black — Cautions</h4>
+            <textarea data-key="sec2_hat_black" class="w-full rounded p-3 text-sm text-gray-100" placeholder="Risks, weaknesses…"></textarea>
+            <div class="flex justify-between mt-2 text-xs"><span>What could go wrong?</span><span class="count" data-for="sec2_hat_black"></span></div>
+          </div>
+          <div class="hat hat-yellow rounded-xl p-4">
+            <h4 class="font-[Cinzel] text-lg mb-2">Yellow — Benefits</h4>
+            <textarea data-key="sec2_hat_yellow" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Benefits, value…"></textarea>
+            <div class="flex justify-between mt-2 text-xs"><span>Why worthwhile?</span><span class="count" data-for="sec2_hat_yellow"></span></div>
+          </div>
+          <div class="hat hat-green rounded-xl p-4">
+            <h4 class="font-[Cinzel] text-lg mb-2">Green — Ideas</h4>
+            <textarea data-key="sec2_hat_green" class="w-full rounded p-3 text-sm text-emerald-50" placeholder="Alternatives, creative angles…"></textarea>
+            <div class="flex justify-between mt-2 text-xs"><span>What else?</span><span class="count" data-for="sec2_hat_green"></span></div>
+          </div>
+          <div class="hat hat-blue rounded-xl p-4">
+            <h4 class="font-[Cinzel] text-lg mb-2">Blue — Process</h4>
+            <textarea data-key="sec2_hat_blue" class="w-full rounded p-3 text-sm text-slate-100" placeholder="Next steps, roles, timeline…"></textarea>
+            <div class="flex justify-between mt-2 text-xs"><span>How manage?</span><span class="count" data-for="sec2_hat_blue"></span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Actions -->
+      <section class="flex flex-wrap items-center gap-3 justify-between">
+        <div class="text-xs text-gray-300">No personal data is collected. All entries stay in your browser.</div>
+        <div class="flex gap-2">
+          <button data-export="sec2" class="export-btn px-3 py-2 rounded bg-[var(--inferno-ember)] text-white hover:brightness-110">Download Section 2 Notes (.txt)</button>
+          <button data-clear="sec2" class="clear-btn px-3 py-2 rounded bg-black/40 hover:bg-black/60 border border-white/10">Clear Section 2 Data</button>
+        </div>
+      </section>
+    </section>
+
+    <!-- ======================== -->
+    <!-- SECTION 3                -->
+    <!-- ======================== -->
+    <section id="sec3" class="space-y-8">
+      <header class="flex items-center gap-3">
+        <div class="text-xs sectionBadge px-3 py-1 rounded-full text-[var(--parchment)]">Section 3 Organizer</div>
+        <h2 class="font-[Cinzel] text-2xl text-[var(--inferno-gold)]">Understanding Medieval Catholic Theology for Dante’s Inferno</h2>
+      </header>
+
+      <!-- Stations -->
+      <div class="space-y-6">
+        <!-- S3 Station 1 -->
+        <article class="parchment rounded-2xl p-5">
+          <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 1: The Nature of Sin and Free Will</h3>
+          <p class="text-sm text-gray-900/80 mb-3">Agency, culpability, intention; vice/virtue frameworks.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label class="block text-sm"><span class="opacity-80">Key Ideas</span>
+              <textarea data-key="sec3_s1_ideas" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Mortal vs venial, habit formation…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec3_s1_ideas"></span></div>
+            </label>
+            <label class="block text-sm"><span class="opacity-80">Evidence / Quotes</span>
+              <textarea data-key="sec3_s1_evidence" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Summa, commentaries…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec3_s1_evidence"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2"><span class="opacity-80">Connections &amp; Implications</span>
+              <textarea data-key="sec3_s1_connections" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Link to Dante’s punishments…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec3_s1_connections"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2"><span class="opacity-80">Questions</span>
+              <textarea data-key="sec3_s1_questions" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Debates or ambiguities?"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec3_s1_questions"></span></div>
+            </label>
+          </div>
+        </article>
+
+        <!-- S3 Station 2 -->
+        <article class="parchment rounded-2xl p-5">
+          <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 2: The Afterlife Geography</h3>
+          <p class="text-sm text-gray-900/80 mb-3">Heaven, Hell, Purgatory; ordering principles and transitions.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label class="block text-sm"><span class="opacity-80">Key Ideas</span>
+              <textarea data-key="sec3_s2_ideas" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Hierarchy, circles/terraces, ascent…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec3_s2_ideas"></span></div>
+            </label>
+            <label class="block text-sm"><span class="opacity-80">Evidence / Quotes</span>
+              <textarea data-key="sec3_s2_evidence" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Texts, sermons, exegesis…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec3_s2_evidence"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2"><span class="opacity-80">Connections &amp; Implications</span>
+              <textarea data-key="sec3_s2_connections" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Why this structure matters…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec3_s2_connections"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2"><span class="opacity-80">Questions</span>
+              <textarea data-key="sec3_s2_questions" class="w-full rounded p-3 text-sm text-gray-900" placeholder="What would you ask a theologian?"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec3_s2_questions"></span></div>
+            </label>
+          </div>
+        </article>
+
+        <!-- S3 Station 3 -->
+        <article class="parchment rounded-2xl p-5">
+          <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 3: Medieval Moral Philosophy</h3>
+          <p class="text-sm text-gray-900/80 mb-3">Virtues/vices, ends and means, natural law, conscience.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label class="block text-sm"><span class="opacity-80">Key Ideas</span>
+              <textarea data-key="sec3_s3_ideas" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Aquinas, Augustine, Aristotle…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec3_s3_ideas"></span></div>
+            </label>
+            <label class="block text-sm"><span class="opacity-80">Evidence / Quotes</span>
+              <textarea data-key="sec3_s3_evidence" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Passages on habit/virtue…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec3_s3_evidence"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2"><span class="opacity-80">Connections &amp; Implications</span>
+              <textarea data-key="sec3_s3_connections" class="w-full rounded p-3 text-sm text-gray-900" placeholder="How this frames Dante’s judgments…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec3_s3_connections"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2"><span class="opacity-80">Questions</span>
+              <textarea data-key="sec3_s3_questions" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Where do you see tensions?"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec3_s3_questions"></span></div>
+            </label>
+          </div>
+        </article>
+
+        <!-- S3 Station 4 -->
+        <article class="parchment rounded-2xl p-5">
+          <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 4: Sacraments and Salvation</h3>
+          <p class="text-sm text-gray-900/80 mb-3">Grace, sacramental economy, penance, and hope.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label class="block text-sm"><span class="opacity-80">Key Ideas</span>
+              <textarea data-key="sec3_s4_ideas" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Baptism, Eucharist, confession…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec3_s4_ideas"></span></div>
+            </label>
+            <label class="block text-sm"><span class="opacity-80">Evidence / Quotes</span>
+              <textarea data-key="sec3_s4_evidence" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Theology texts, catechesis…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec3_s4_evidence"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2"><span class="opacity-80">Connections &amp; Implications</span>
+              <textarea data-key="sec3_s4_connections" class="w-full rounded p-3 text-sm text-gray-900" placeholder="How grace intersects with justice…"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec3_s4_connections"></span></div>
+            </label>
+            <label class="block text-sm md:col-span-2"><span class="opacity-80">Questions</span>
+              <textarea data-key="sec3_s4_questions" class="w-full rounded p-3 text-sm text-gray-900" placeholder="What remains unclear?"></textarea>
+              <div class="flex justify-end text-xs"><span class="count" data-for="sec3_s4_questions"></span></div>
+            </label>
+          </div>
+        </article>
+      </div>
+
+      <!-- Six Hats -->
+      <section class="space-y-4">
+        <h3 class="font-[Cinzel] text-2xl text-[var(--inferno-gold)]">Six Thinking Hats — Section 3</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="hat hat-white rounded-xl p-4">
+            <h4 class="font-[Cinzel] text-lg mb-2">White — Facts</h4>
+            <textarea data-key="sec3_hat_white" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Key facts, data, sources…"></textarea>
+            <div class="flex justify-between mt-2 text-xs"><span>What do we know?</span><span class="count" data-for="sec3_hat_white"></span></div>
+          </div>
+          <div class="hat hat-red rounded-xl p-4">
+            <h4 class="font-[Cinzel] text-lg mb-2">Red — Feelings</h4>
+            <textarea data-key="sec3_hat_red" class="w-full rounded p-3 text-sm text-white/90" placeholder="Emotions, gut feelings…"></textarea>
+            <div class="flex justify-between mt-2 text-xs"><span>How does this feel?</span><span class="count" data-for="sec3_hat_red"></span></div>
+          </div>
+          <div class="hat hat-black rounded-xl p-4">
+            <h4 class="font-[Cinzel] text-lg mb-2">Black — Cautions</h4>
+            <textarea data-key="sec3_hat_black" class="w-full rounded p-3 text-sm text-gray-100" placeholder="Risks, weaknesses…"></textarea>
+            <div class="flex justify-between mt-2 text-xs"><span>What could go wrong?</span><span class="count" data-for="sec3_hat_black"></span></div>
+          </div>
+          <div class="hat hat-yellow rounded-xl p-4">
+            <h4 class="font-[Cinzel] text-lg mb-2">Yellow — Benefits</h4>
+            <textarea data-key="sec3_hat_yellow" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Benefits, value…"></textarea>
+            <div class="flex justify-between mt-2 text-xs"><span>Why worthwhile?</span><span class="count" data-for="sec3_hat_yellow"></span></div>
+          </div>
+          <div class="hat hat-green rounded-xl p-4">
+            <h4 class="font-[Cinzel] text-lg mb-2">Green — Ideas</h4>
+            <textarea data-key="sec3_hat_green" class="w-full rounded p-3 text-sm text-emerald-50" placeholder="Alternatives, creative angles…"></textarea>
+            <div class="flex justify-between mt-2 text-xs"><span>What else?</span><span class="count" data-for="sec3_hat_green"></span></div>
+          </div>
+          <div class="hat hat-blue rounded-xl p-4">
+            <h4 class="font-[Cinzel] text-lg mb-2">Blue — Process</h4>
+            <textarea data-key="sec3_hat_blue" class="w-full rounded p-3 text-sm text-slate-100" placeholder="Next steps, roles, timeline…"></textarea>
+            <div class="flex justify-between mt-2 text-xs"><span>How manage?</span><span class="count" data-for="sec3_hat_blue"></span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Actions -->
+      <section class="flex flex-wrap items-center gap-3 justify-between">
+        <div class="text-xs text-gray-300">No personal data is collected. All entries stay in your browser.</div>
+        <div class="flex gap-2">
+          <button data-export="sec3" class="export-btn px-3 py-2 rounded bg-[var(--inferno-ember)] text-white hover:brightness-110">Download Section 3 Notes (.txt)</button>
+          <button data-clear="sec3" class="clear-btn px-3 py-2 rounded bg-black/40 hover:bg-black/60 border border-white/10">Clear Section 3 Data</button>
+        </div>
+      </section>
     </section>
 
   </main>
 
   <footer class="text-center text-[11px] text-gray-400 py-6">
-    © DIPBL Organizer · Section 1 · Theme inspired by <span class="text-[var(--inferno-gold)]">Dante’s Inferno</span>.
+    © DIPBL Organizer · Dante Theme
   </footer>
 
   <script>
-    /* ========= Core utils & storage ========= */
-    const PREFIX = 'dipbl_sec1_';
+    /* ========= Core utils & storage (global) ========= */
+    const PREFIX = 'dipbl_p1_'; // single prefix for this page
     const $ = (sel) => document.querySelector(sel);
     const $$ = (sel) => Array.from(document.querySelectorAll(sel));
     const save = (k, v) => { try { localStorage.setItem(PREFIX + k, v); } catch(e){} };
@@ -415,68 +730,57 @@
       });
     });
 
-    /* ========= Export Section 1 notes ========= */
-    $('#exportSection1').addEventListener('click', () => {
+    /* ========= Export helpers ========= */
+    function exportSection(prefix) {
       const lines = [];
-      const push = (title, key) => lines.push(`\n=== ${title} ===\n${load(key, '')}`);
+      const sectionAreas = areas.filter(a => a.getAttribute('data-key').startsWith(prefix + '_'));
+      // Order by DOM appearance:
+      sectionAreas.forEach(a => {
+        const key = a.getAttribute('data-key');
+        const label = a.closest('article, .hat')?.querySelector('h3, h4')?.textContent?.trim() || 'Notes';
+        const fieldTitle = a.previousElementSibling?.textContent?.trim() || 'Notes';
+        lines.push(`\n=== ${label} · ${fieldTitle} ===\n${load(key, '')}`);
+      });
 
-      // Stations
-      push('Station 1 · Key Ideas', 'sec1_s1_ideas');
-      push('Station 1 · Evidence / Quotes', 'sec1_s1_evidence');
-      push('Station 1 · Connections & Implications', 'sec1_s1_connections');
-      push('Station 1 · Questions', 'sec1_s1_questions');
-
-      push('Station 2 · Key Ideas', 'sec1_s2_ideas');
-      push('Station 2 · Evidence / Quotes', 'sec1_s2_evidence');
-      push('Station 2 · Connections & Implications', 'sec1_s2_connections');
-      push('Station 2 · Questions', 'sec1_s2_questions');
-
-      push('Station 3 · Key Ideas', 'sec1_s3_ideas');
-      push('Station 3 · Evidence / Quotes', 'sec1_s3_evidence');
-      push('Station 3 · Connections & Implications', 'sec1_s3_connections');
-      push('Station 3 · Questions', 'sec1_s3_questions');
-
-      push('Station 4 · Key Ideas', 'sec1_s4_ideas');
-      push('Station 4 · Evidence / Quotes', 'sec1_s4_evidence');
-      push('Station 4 · Connections & Implications', 'sec1_s4_connections');
-      push('Station 4 · Questions', 'sec1_s4_questions');
-
-      push('Station 5 · Key Ideas', 'sec1_s5_ideas');
-      push('Station 5 · Evidence / Quotes', 'sec1_s5_evidence');
-      push('Station 5 · Connections & Implications', 'sec1_s5_connections');
-      push('Station 5 · Questions', 'sec1_s5_questions');
-
-      push('Station 6 · Key Ideas', 'sec1_s6_ideas');
-      push('Station 6 · Evidence / Quotes', 'sec1_s6_evidence');
-      push('Station 6 · Connections & Implications', 'sec1_s6_connections');
-      push('Station 6 · Questions', 'sec1_s6_questions');
-
-      // Hats
-      push('Hats · White (Facts)', 'sec1_hat_white');
-      push('Hats · Red (Feelings)', 'sec1_hat_red');
-      push('Hats · Black (Cautions)', 'sec1_hat_black');
-      push('Hats · Yellow (Benefits)', 'sec1_hat_yellow');
-      push('Hats · Green (Ideas)', 'sec1_hat_green');
-      push('Hats · Blue (Process)', 'sec1_hat_blue');
+      // Also add Six Hats grouped
+      const hats = ['white','red','black','yellow','green','blue'];
+      hats.forEach(h => {
+        const k = `${prefix}_hat_${h}`;
+        const hatEl = document.querySelector(`[data-key="${k}"]`);
+        if (hatEl) {
+          const hatTitle = hatEl.closest('.hat')?.querySelector('h4')?.textContent?.trim() || `Hat ${h}`;
+          lines.push(`\n=== ${hatTitle} ===\n${load(k, '')}`);
+        }
+      });
 
       const blob = new Blob([lines.join('\n')], {type:'text/plain'});
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url; a.download = 'section1_notes.txt'; a.click();
+      const sectionNum = prefix.replace('sec','');
+      a.href = url; a.download = `section${sectionNum}_notes.txt`; a.click();
       URL.revokeObjectURL(url);
-    });
+    }
 
-    /* ========= Clear Section 1 data ========= */
-    $('#clearSection1').addEventListener('click', () => {
-      if (!confirm('Clear all saved data for Section 1 on this device?')) return;
+    function clearSection(prefix) {
+      if (!confirm(`Clear all saved data for ${prefix.toUpperCase()} on this device?`)) return;
       const toDelete = [];
       for (let i=0;i<localStorage.length;i++){
         const k = localStorage.key(i);
-        if (k && k.startsWith(PREFIX)) toDelete.push(k);
+        if (k && k.startsWith(PREFIX + prefix + '_')) toDelete.push(k);
+      }
+      toDelete.forEach(k => localStorage.removeItem(k));
+      // Also clear hats for the section (keys start with e.g., sec1_hat_)
+      for (let i=0;i<localStorage.length;i++){
+        const k = localStorage.key(i);
+        if (k && k.startsWith(PREFIX + prefix + '_hat_')) toDelete.push(k);
       }
       toDelete.forEach(k => localStorage.removeItem(k));
       location.reload();
-    });
+    }
+
+    // Wire buttons
+    $$('.export-btn').forEach(btn => btn.addEventListener('click', () => exportSection(btn.dataset.export)));
+    $$('.clear-btn').forEach(btn => btn.addEventListener('click', () => clearSection(btn.dataset.clear)));
   </script>
 </body>
 </html>
