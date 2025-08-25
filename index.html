@@ -3,16 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DIPBL Project Organizer · Dante Theme</title>
+  <title>DIPBL · Journey Into Dante's World</title>
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
     :root {
@@ -44,9 +41,13 @@
       background: linear-gradient(90deg, transparent, var(--inferno-ember), var(--inferno-gold), var(--inferno-ember), transparent);
       filter: drop-shadow(0 0 6px rgba(196,62,47,.45));
     }
-    .chart-slim { position: relative; height: 8rem; }    /* compact charts */
-    @media (min-width: 768px) { .chart-slim { height: 10rem; } }
-
+    textarea, input[type="text"] {
+      resize: vertical;
+      min-height: 5.5rem;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.2);
+    }
+    .count { font-variant-numeric: tabular-nums; }
     .hat { border-width:1px; }
     .hat-white { background:#f7f7f7; color:#111; border-color:#e5e5e5; }
     .hat-red   { background:#7f1d1d; color:#fff; border-color:#9f1239; }
@@ -54,14 +55,10 @@
     .hat-yellow{ background:#f6e27a; color:#111; border-color:#eab308; }
     .hat-green { background:#064e3b; color:#d1fae5; border-color:#059669; }
     .hat-blue  { background:#0f172a; color:#e2e8f0; border-color:#334155; }
-
-    textarea {
-      resize: vertical;
-      min-height: 6rem;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.2);
+    .sectionBadge {
+      background: linear-gradient(90deg, rgba(200,164,93,.25), rgba(196,62,47,.25));
+      border: 1px solid rgba(200,164,93,.35);
     }
-    .count { font-variant-numeric: tabular-nums; }
   </style>
 </head>
 <body class="text-gray-100 font-[Crimson_Text] min-h-full">
@@ -69,175 +66,303 @@
   <!-- Header -->
   <header class="hdr text-center py-10 shadow-xl">
     <h1 class="font-[Cinzel] text-3xl md:text-5xl font-extrabold text-[var(--inferno-gold)] title-shadow">
-      DIPBL Project Organizer
+      Journey Into Dante's World
     </h1>
-    <p class="mt-2 text-sm md:text-base text-gray-200/90">Track time, think with De Bono’s hats, and analyze through Dante, Contemporary Art, and Community Action lenses.</p>
+    <p class="mt-2 text-sm md:text-base text-gray-200/90">Stations organizer + Six Thinking Hats for Section 1. All notes auto-save locally.</p>
     <div class="mx-auto mt-6 max-w-5xl flame-divider rounded-full"></div>
   </header>
 
-  <main class="max-w-6xl mx-auto px-4 md:px-6 py-8 space-y-8">
+  <main class="max-w-6xl mx-auto px-4 md:px-6 py-8 space-y-10">
 
-    <!-- TOP STRIP: Compact Charts -->
-    <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <!-- Time Allocation -->
-      <div class="card rounded-2xl p-4">
-        <div class="flex items-center justify-between mb-2">
-          <h2 class="font-[Cinzel] text-lg text-[var(--inferno-gold)]">Time Allocation</h2>
-          <button id="timeExport" class="text-xs px-2 py-1 rounded bg-[var(--inferno-ash)] hover:bg-black/60">PNG</button>
-        </div>
-        <div class="chart-slim"><canvas id="timeChart"></canvas></div>
-        <details class="mt-2">
-          <summary class="cursor-pointer text-xs text-gray-300 hover:text-white">Adjust data</summary>
-          <div class="grid grid-cols-2 gap-2 mt-2 text-xs">
-            <label>Design <input id="t-design" type="number" min="0" max="20" value="3" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
-            <label>Calibrate <input id="t-cal" type="number" min="0" max="20" value="3" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
-            <label>Co-Manage <input id="t-co" type="number" min="0" max="20" value="3" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
-            <label>Debrief <input id="t-deb" type="number" min="0" max="20" value="1" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
-          </div>
-        </details>
-      </div>
-
-      <!-- Tasks -->
-      <div class="card rounded-2xl p-4">
-        <div class="flex items-center justify-between mb-2">
-          <h2 class="font-[Cinzel] text-lg text-[var(--inferno-gold)]">Task Distribution</h2>
-          <button id="taskExport" class="text-xs px-2 py-1 rounded bg-[var(--inferno-ash)] hover:bg-black/60">PNG</button>
-        </div>
-        <div class="chart-slim"><canvas id="taskChart"></canvas></div>
-        <details class="mt-2">
-          <summary class="cursor-pointer text-xs text-gray-300 hover:text-white">Adjust data</summary>
-          <div class="grid grid-cols-2 gap-2 mt-2 text-xs">
-            <label>Research <input id="k-research" type="number" min="0" value="6" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
-            <label>Build <input id="k-build" type="number" min="0" value="10" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
-            <label>Test <input id="k-test" type="number" min="0" value="5" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
-            <label>Present <input id="k-present" type="number" min="0" value="3" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
-          </div>
-        </details>
-      </div>
-
-      <!-- Resources -->
-      <div class="card rounded-2xl p-4">
-        <div class="flex items-center justify-between mb-2">
-          <h2 class="font-[Cinzel] text-lg text-[var(--inferno-gold)]">Resources (hours)</h2>
-          <button id="resExport" class="text-xs px-2 py-1 rounded bg-[var(--inferno-ash)] hover:bg-black/60">PNG</button>
-        </div>
-        <div class="chart-slim"><canvas id="resChart"></canvas></div>
-        <details class="mt-2">
-          <summary class="cursor-pointer text-xs text-gray-300 hover:text-white">Adjust data</summary>
-          <div class="grid grid-cols-2 gap-2 mt-2 text-xs">
-            <label>Mentor <input id="r-mentor" type="number" min="0" step="0.5" value="4" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
-            <label>Lab/Tools <input id="r-lab" type="number" min="0" step="0.5" value="6" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
-            <label>Reading <input id="r-reading" type="number" min="0" step="0.5" value="3" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
-            <label>Practice <input id="r-practice" type="number" min="0" step="0.5" value="5" class="w-full rounded px-2 py-1 bg-black/30 border border-white/10"></label>
-          </div>
-        </details>
-      </div>
+    <!-- Quick Nav -->
+    <section class="flex flex-wrap gap-2 items-center justify-between">
+      <div class="text-xs sectionBadge px-3 py-1 rounded-full text-[var(--parchment)]">Section 1 Organizer</div>
+      <nav class="text-xs flex flex-wrap gap-2">
+        <a href="#s1" class="underline/50 hover:underline">Stations</a>
+        <span>•</span>
+        <a href="#hats" class="underline/50 hover:underline">Six Thinking Hats</a>
+      </nav>
     </section>
 
-    <!-- Six Thinking Hats -->
-    <section class="parchment rounded-2xl p-6">
-      <div class="flex items-center gap-3 mb-4">
-        <svg width="22" height="22" viewBox="0 0 24 24" class="shrink-0"><path fill="currentColor" d="M12 2c-3 0-5 2-5 4v1H6a2 2 0 0 0-2 2v1h16V9a2 2 0 0 0-2-2h-1V6c0-2-2-4-5-4m-7 9v6a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-6z"/></svg>
-        <h2 class="font-[Cinzel] text-2xl text-[var(--inferno-red)]">Six Thinking Hats</h2>
-      </div>
-      <p class="text-sm text-gray-900/80 mb-4">Use each hat to explore your idea from different angles. Notes auto-save locally.</p>
+    <!-- Stations -->
+    <section id="s1" class="space-y-6">
+      <h2 class="font-[Cinzel] text-2xl text-[var(--inferno-gold)]">Stations</h2>
+
+      <!-- Station template repeated with unique keys -->
+      <!-- Station 1 -->
+      <article class="parchment rounded-2xl p-5">
+        <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 1: Political Exile &amp; Power — Florence's Factional Warfare</h3>
+        <p class="text-sm text-gray-900/80 mb-3">Context, factions (Guelphs/Ghibellines, Whites/Blacks), exile, power structures shaping Dante’s worldview.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <label class="block text-sm">
+            <span class="opacity-80">Key Ideas</span>
+            <textarea data-key="sec1_s1_ideas" placeholder="Summarize the core historical/political dynamics…"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s1_ideas"></span></div>
+          </label>
+
+          <label class="block text-sm">
+            <span class="opacity-80">Evidence / Quotes</span>
+            <textarea data-key="sec1_s1_evidence" placeholder="Quotations or citations with canto/line references…"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s1_evidence"></span></div>
+          </label>
+
+          <label class="block text-sm md:col-span-2">
+            <span class="opacity-80">Connections &amp; Implications</span>
+            <textarea data-key="sec1_s1_connections" placeholder="Connections to themes of justice, leadership, exile, loyalty…"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s1_connections"></span></div>
+          </label>
+
+          <label class="block text-sm md:col-span-2">
+            <span class="opacity-80">Questions</span>
+            <textarea data-key="sec1_s1_questions" placeholder="What remains unclear? What would you ask a historian?"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s1_questions"></span></div>
+          </label>
+        </div>
+      </article>
+
+      <!-- Station 2 -->
+      <article class="parchment rounded-2xl p-5">
+        <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 2: Scholastic Philosophy Meets Poetic Vision</h3>
+        <p class="text-sm text-gray-900/80 mb-3">Aristotelian/Thomistic frameworks intersecting with poetic allegory and theological imagination.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <label class="block text-sm">
+            <span class="opacity-80">Key Ideas</span>
+            <textarea data-key="sec1_s2_ideas" placeholder="Virtue ethics, teleology, reason/revelation interplay…"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s2_ideas"></span></div>
+          </label>
+
+          <label class="block text-sm">
+            <span class="opacity-80">Evidence / Quotes</span>
+            <textarea data-key="sec1_s2_evidence" placeholder="Lines, commentators, scholastic references…"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s2_evidence"></span></div>
+          </label>
+
+          <label class="block text-sm md:col-span-2">
+            <span class="opacity-80">Connections &amp; Implications</span>
+            <textarea data-key="sec1_s2_connections" placeholder="How philosophical frameworks structure moral judgment in the poem…"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s2_connections"></span></div>
+          </label>
+
+          <label class="block text-sm md:col-span-2">
+            <span class="opacity-80">Questions</span>
+            <textarea data-key="sec1_s2_questions" placeholder="What tensions arise between doctrine and art?"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s2_questions"></span></div>
+          </label>
+        </div>
+      </article>
+
+      <!-- Station 3 -->
+      <article class="parchment rounded-2xl p-5">
+        <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 3: Moral Architecture — Sin as Cosmic Disorder</h3>
+        <p class="text-sm text-gray-900/80 mb-3">The structure of Hell as a moral map (continence, incontinence, violence, fraud, treachery).</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <label class="block text-sm">
+            <span class="opacity-80">Key Ideas</span>
+            <textarea data-key="sec1_s3_ideas" placeholder="Ordering of sins, contrapasso, justice/mercy tensions…"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s3_ideas"></span></div>
+          </label>
+
+          <label class="block text-sm">
+            <span class="opacity-80">Evidence / Quotes</span>
+            <textarea data-key="sec1_s3_evidence" placeholder="Episodes, figures, punishments, structural markers…"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s3_evidence"></span></div>
+          </label>
+
+          <label class="block text-sm md:col-span-2">
+            <span class="opacity-80">Connections &amp; Implications</span>
+            <textarea data-key="sec1_s3_connections" placeholder="How moral order reflects cosmic order and civic ethics…"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s3_connections"></span></div>
+          </label>
+
+          <label class="block text-sm md:col-span-2">
+            <span class="opacity-80">Questions</span>
+            <textarea data-key="sec1_s3_questions" placeholder="Which boundary cases feel ambiguous and why?"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s3_questions"></span></div>
+          </label>
+        </div>
+      </article>
+
+      <!-- Station 4 -->
+      <article class="parchment rounded-2xl p-5">
+        <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 4: Intertextuality &amp; Literary Synthesis</h3>
+        <p class="text-sm text-gray-900/80 mb-3">Dialogues with Virgil, Ovid, Scripture, classical &amp; medieval sources woven into Dante’s epic.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <label class="block text-sm">
+            <span class="opacity-80">Key Ideas</span>
+            <textarea data-key="sec1_s4_ideas" placeholder="Models, mentors, allusions, transformations of source material…"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s4_ideas"></span></div>
+          </label>
+
+          <label class="block text-sm">
+            <span class="opacity-80">Evidence / Quotes</span>
+            <textarea data-key="sec1_s4_evidence" placeholder="Specific intertexts and how Dante reframes them…"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s4_evidence"></span></div>
+          </label>
+
+          <label class="block text-sm md:col-span-2">
+            <span class="opacity-80">Connections &amp; Implications</span>
+            <textarea data-key="sec1_s4_connections" placeholder="What synthesis emerges? How does it shape readers’ understanding?"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s4_connections"></span></div>
+          </label>
+
+          <label class="block text-sm md:col-span-2">
+            <span class="opacity-80">Questions</span>
+            <textarea data-key="sec1_s4_questions" placeholder="What intertexts would you research further?"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s4_questions"></span></div>
+          </label>
+        </div>
+      </article>
+
+      <!-- Station 5 -->
+      <article class="parchment rounded-2xl p-5">
+        <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 5: Poetic Innovation — Language, Form, &amp; Allegory</h3>
+        <p class="text-sm text-gray-900/80 mb-3">Terza rima, vernacular elevation, narrative voice, layered allegory.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <label class="block text-sm">
+            <span class="opacity-80">Key Ideas</span>
+            <textarea data-key="sec1_s5_ideas" placeholder="Form shaping meaning; stylistic choices; voice and stance…"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s5_ideas"></span></div>
+          </label>
+
+          <label class="block text-sm">
+            <span class="opacity-80">Evidence / Quotes</span>
+            <textarea data-key="sec1_s5_evidence" placeholder="Lines that illustrate form/technique producing effect…"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s5_evidence"></span></div>
+          </label>
+
+          <label class="block text-sm md:col-span-2">
+            <span class="opacity-80">Connections &amp; Implications</span>
+            <textarea data-key="sec1_s5_connections" placeholder="How innovation influences themes and reception…"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s5_connections"></span></div>
+          </label>
+
+          <label class="block text-sm md:col-span-2">
+            <span class="opacity-80">Questions</span>
+            <textarea data-key="sec1_s5_questions" placeholder="What aesthetic/interpretive puzzles remain?"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s5_questions"></span></div>
+          </label>
+        </div>
+      </article>
+
+      <!-- Station 6 -->
+      <article class="parchment rounded-2xl p-5">
+        <h3 class="font-[Cinzel] text-xl text-[var(--inferno-ember)]">Station 6: Research Methodology &amp; Critical Analysis</h3>
+        <p class="text-sm text-gray-900/80 mb-3">How to investigate, annotate, evaluate sources, and build an argument.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <label class="block text-sm">
+            <span class="opacity-80">Key Ideas</span>
+            <textarea data-key="sec1_s6_ideas" placeholder="Approaches, frameworks, scope, search strategies…"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s6_ideas"></span></div>
+          </label>
+
+          <label class="block text-sm">
+            <span class="opacity-80">Evidence / Quotes</span>
+            <textarea data-key="sec1_s6_evidence" placeholder="Notes from sources, citations, annotations…"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s6_evidence"></span></div>
+          </label>
+
+          <label class="block text-sm md:col-span-2">
+            <span class="opacity-80">Connections &amp; Implications</span>
+            <textarea data-key="sec1_s6_connections" placeholder="How your method strengthens claims; where bias might creep in…"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s6_connections"></span></div>
+          </label>
+
+          <label class="block text-sm md:col-span-2">
+            <span class="opacity-80">Questions</span>
+            <textarea data-key="sec1_s6_questions" placeholder="What you still need to find, test, or verify…"
+              class="w-full rounded p-3 text-sm text-gray-900"></textarea>
+            <div class="flex justify-end text-xs"><span class="count" data-for="sec1_s6_questions"></span></div>
+          </label>
+        </div>
+      </article>
+    </section>
+
+    <!-- Six Thinking Hats for the Section -->
+    <section id="hats" class="space-y-4">
+      <h2 class="font-[Cinzel] text-2xl text-[var(--inferno-gold)]">Six Thinking Hats — Section 1</h2>
+      <p class="text-sm text-gray-200/90">Use the hats to synthesize insights across Stations 1–6.</p>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="hat hat-white rounded-xl p-4">
           <h3 class="font-[Cinzel] text-lg mb-2">White — Facts</h3>
-          <textarea id="hat-white" placeholder="Key facts, data, sources…"
+          <textarea data-key="sec1_hat_white" placeholder="Key facts, data, sources across stations…"
             class="w-full rounded p-3 text-sm text-gray-900"></textarea>
           <div class="flex justify-between mt-2 text-xs">
-            <span>What do we know? What’s missing?</span><span class="count" data-for="hat-white"></span>
+            <span>What do we know? What’s missing?</span><span class="count" data-for="sec1_hat_white"></span>
           </div>
         </div>
 
         <div class="hat hat-red rounded-xl p-4">
           <h3 class="font-[Cinzel] text-lg mb-2">Red — Feelings</h3>
-          <textarea id="hat-red" placeholder="Intuition, gut reactions, emotions…"
+          <textarea data-key="sec1_hat_red" placeholder="Intuition, gut reactions, emotions…"
             class="w-full rounded p-3 text-sm text-white/90"></textarea>
           <div class="flex justify-between mt-2 text-xs">
-            <span>How does this feel?</span><span class="count" data-for="hat-red"></span>
+            <span>How does this feel?</span><span class="count" data-for="sec1_hat_red"></span>
           </div>
         </div>
 
         <div class="hat hat-black rounded-xl p-4">
           <h3 class="font-[Cinzel] text-lg mb-2">Black — Cautions</h3>
-          <textarea id="hat-black" placeholder="Risks, weaknesses, concerns…"
+          <textarea data-key="sec1_hat_black" placeholder="Risks, weaknesses, concerns…"
             class="w-full rounded p-3 text-sm text-gray-100"></textarea>
           <div class="flex justify-between mt-2 text-xs">
-            <span>What could go wrong?</span><span class="count" data-for="hat-black"></span>
+            <span>What could go wrong?</span><span class="count" data-for="sec1_hat_black"></span>
           </div>
         </div>
 
         <div class="hat hat-yellow rounded-xl p-4">
           <h3 class="font-[Cinzel] text-lg mb-2">Yellow — Benefits</h3>
-          <textarea id="hat-yellow" placeholder="Benefits, value, opportunities…"
+          <textarea data-key="sec1_hat_yellow" placeholder="Benefits, value, opportunities…"
             class="w-full rounded p-3 text-sm text-gray-900"></textarea>
           <div class="flex justify-between mt-2 text-xs">
-            <span>Why is this worthwhile?</span><span class="count" data-for="hat-yellow"></span>
+            <span>Why is this worthwhile?</span><span class="count" data-for="sec1_hat_yellow"></span>
           </div>
         </div>
 
         <div class="hat hat-green rounded-xl p-4">
           <h3 class="font-[Cinzel] text-lg mb-2">Green — Ideas</h3>
-          <textarea id="hat-green" placeholder="Alternatives, creative angles, variations…"
+          <textarea data-key="sec1_hat_green" placeholder="Alternatives, creative angles, variations…"
             class="w-full rounded p-3 text-sm text-emerald-50"></textarea>
           <div class="flex justify-between mt-2 text-xs">
-            <span>What else could we try?</span><span class="count" data-for="hat-green"></span>
+            <span>What else could we try?</span><span class="count" data-for="sec1_hat_green"></span>
           </div>
         </div>
 
         <div class="hat hat-blue rounded-xl p-4">
           <h3 class="font-[Cinzel] text-lg mb-2">Blue — Process</h3>
-          <textarea id="hat-blue" placeholder="Next steps, process, roles, timeline…"
+          <textarea data-key="sec1_hat_blue" placeholder="Next steps, process, roles, timeline…"
             class="w-full rounded p-3 text-sm text-slate-100"></textarea>
           <div class="flex justify-between mt-2 text-xs">
-            <span>How do we manage it?</span><span class="count" data-for="hat-blue"></span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Three-Lens Analysis -->
-    <section class="card rounded-2xl p-6">
-      <div class="flex items-center gap-3 mb-4">
-        <svg width="22" height="22" viewBox="0 0 24 24" class="shrink-0"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2Zm1 15h-2v-2h2Zm0-4h-2V7h2Z"/></svg>
-        <h2 class="font-[Cinzel] text-2xl text-[var(--inferno-gold)]">Three-Lens Analysis</h2>
-      </div>
-      <p class="text-sm text-gray-200/90 mb-4">Brainstorm for each lens. Use prompts to get started.</p>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <!-- Dante -->
-        <div class="rounded-xl p-4 border border-white/10 bg-black/20">
-          <h3 class="font-[Cinzel] text-lg text-[var(--inferno-ember)]">Dante’s Lens</h3>
-          <p class="text-xs text-gray-300 mb-2">Allegory, moral choices, symbolism, journey motifs, circles/sins/virtues.</p>
-          <textarea id="lens-dante" placeholder="How does your topic echo Dante’s journeys or moral frameworks?"
-            class="w-full rounded p-3 text-sm"></textarea>
-          <div class="flex justify-between mt-2 text-xs">
-            <span>Prompt: Which circle/theme best mirrors your issue?</span><span class="count" data-for="lens-dante"></span>
-          </div>
-        </div>
-
-        <!-- Contemporary Art -->
-        <div class="rounded-xl p-4 border border-white/10 bg-black/20">
-          <h3 class="font-[Cinzel] text-lg text-[var(--inferno-ember)]">Contemporary Art’s Lens</h3>
-          <p class="text-xs text-gray-300 mb-2">Media, audience, message, intervention, remix, visual metaphors.</p>
-          <textarea id="lens-art" placeholder="How might contemporary artists represent or challenge this topic?"
-            class="w-full rounded p-3 text-sm"></textarea>
-          <div class="flex justify-between mt-2 text-xs">
-            <span>Prompt: What form would your ‘piece’ take?</span><span class="count" data-for="lens-art"></span>
-          </div>
-        </div>
-
-        <!-- Community Action -->
-        <div class="rounded-xl p-4 border border-white/10 bg-black/20">
-          <h3 class="font-[Cinzel] text-lg text-[var(--inferno-ember)]">Community Action’s Lens</h3>
-          <p class="text-xs text-gray-300 mb-2">Stakeholders, needs, feasibility, impact, ethical considerations.</p>
-          <textarea id="lens-community" placeholder="What actions could mobilize your community around this topic?"
-            class="w-full rounded p-3 text-sm"></textarea>
-          <div class="flex justify-between mt-2 text-xs">
-            <span>Prompt: What is a first, concrete step?</span><span class="count" data-for="lens-community"></span>
+            <span>How do we manage it?</span><span class="count" data-for="sec1_hat_blue"></span>
           </div>
         </div>
       </div>
@@ -247,167 +372,109 @@
     <section class="flex flex-wrap items-center gap-3 justify-between">
       <div class="text-xs text-gray-300">No personal data is collected. All entries stay in your browser.</div>
       <div class="flex gap-2">
-        <button id="exportNotes" class="px-3 py-2 rounded bg-[var(--inferno-ember)] text-white hover:brightness-110">Download Notes (.txt)</button>
-        <button id="clearAll" class="px-3 py-2 rounded bg-black/40 hover:bg-black/60 border border-white/10">Clear Saved Data</button>
+        <button id="exportSection1" class="px-3 py-2 rounded bg-[var(--inferno-ember)] text-white hover:brightness-110">Download Section 1 Notes (.txt)</button>
+        <button id="clearSection1" class="px-3 py-2 rounded bg-black/40 hover:bg-black/60 border border-white/10">Clear Section 1 Data</button>
       </div>
     </section>
 
   </main>
 
   <footer class="text-center text-[11px] text-gray-400 py-6">
-    © DIPBL Organizer. Theme inspired by <span class="text-[var(--inferno-gold)]">Dante’s Inferno</span>.
+    © DIPBL Organizer · Section 1 · Theme inspired by <span class="text-[var(--inferno-gold)]">Dante’s Inferno</span>.
   </footer>
 
   <script>
-    /* =========================
-       Core Utilities & Storage
-       ========================= */
-    const PREFIX = 'dipbl_v2_';
-    const $ = sel => document.querySelector(sel);
-    const $$ = sel => Array.from(document.querySelectorAll(sel));
+    /* ========= Core utils & storage ========= */
+    const PREFIX = 'dipbl_sec1_';
+    const $ = (sel) => document.querySelector(sel);
+    const $$ = (sel) => Array.from(document.querySelectorAll(sel));
     const save = (k, v) => { try { localStorage.setItem(PREFIX + k, v); } catch(e){} };
     const load = (k, d='') => { try { return localStorage.getItem(PREFIX + k) ?? d; } catch(e){ return d; } };
-    const saveJSON = (k, obj) => save(k, JSON.stringify(obj));
-    const loadJSON = (k, d=[]) => { try { const v = JSON.parse(load(k)); return Array.isArray(v) ? v : d; } catch(e){ return d; } };
-    const toInt = (v, min=0) => { v = parseFloat(v); return isNaN(v) ? min : Math.max(min, v); };
+    const wordCount = (s) => (s.trim().length ? s.trim().split(/\s+/).length : 0);
 
-    /* =========================
-       Charts (compact strip)
-       ========================= */
-    // Load or defaults
-    const timeVals = loadJSON('time', [3,3,3,1]);
-    const taskVals = loadJSON('tasks', [6,10,5,3]);
-    const resVals  = loadJSON('res',  [4,6,3,5]);
-
-    // Build charts
-    const timeChart = new Chart($('#timeChart').getContext('2d'), {
-      type: 'bar',
-      data: { labels: ['Design','Calibrate','Co-Manage','Debrief'],
-        datasets: [{ label:'Weeks', data: timeVals, borderWidth:1 }] },
-      options: { responsive:true, maintainAspectRatio:false,
-        scales:{ y:{ beginAtZero:true, ticks:{ precision:0 } } },
-        plugins:{ legend:{ display:false } } }
-    });
-
-    const taskChart = new Chart($('#taskChart').getContext('2d'), {
-      type: 'doughnut',
-      data: { labels: ['Research','Build','Test','Present'],
-        datasets: [{ label:'Tasks', data: taskVals }] },
-      options: { responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{ position:'bottom', labels:{ color:'#e5e7eb' } } } }
-    });
-
-    const resChart = new Chart($('#resChart').getContext('2d'), {
-      type: 'line',
-      data: { labels: ['Mentor','Lab/Tools','Reading','Practice'],
-        datasets: [{ label:'Hours', data: resVals, tension:0.25, fill:false }] },
-      options: { responsive:true, maintainAspectRatio:false,
-        scales:{ y:{ beginAtZero:true } },
-        plugins:{ legend:{ display:false } } }
-    });
-
-    // Inputs -> charts -> storage
-    const bindNumInput = (id, arr, idx, chart, key) => {
-      const el = $(id);
-      if (!el) return;
-      el.value = arr[idx];
-      el.addEventListener('input', () => {
-        arr[idx] = toInt(el.value, 0);
-        chart.data.datasets[0].data = arr;
-        chart.update();
-        saveJSON(key, arr);
-      });
-    };
-
-    bindNumInput('#t-design', timeVals, 0, timeChart, 'time');
-    bindNumInput('#t-cal',    timeVals, 1, timeChart, 'time');
-    bindNumInput('#t-co',     timeVals, 2, timeChart, 'time');
-    bindNumInput('#t-deb',    timeVals, 3, timeChart, 'time');
-
-    bindNumInput('#k-research', taskVals, 0, taskChart, 'tasks');
-    bindNumInput('#k-build',    taskVals, 1, taskChart, 'tasks');
-    bindNumInput('#k-test',     taskVals, 2, taskChart, 'tasks');
-    bindNumInput('#k-present',  taskVals, 3, taskChart, 'tasks');
-
-    bindNumInput('#r-mentor',   resVals, 0, resChart, 'res');
-    bindNumInput('#r-lab',      resVals, 1, resChart, 'res');
-    bindNumInput('#r-reading',  resVals, 2, resChart, 'res');
-    bindNumInput('#r-practice', resVals, 3, resChart, 'res');
-
-    // PNG export
-    const toPNG = (chart, filename) => {
-      const url = chart.toBase64Image ? chart.toBase64Image() : chart.canvas.toDataURL('image/png');
-      const a = document.createElement('a'); a.href = url; a.download = filename; a.click();
-    };
-    $('#timeExport').addEventListener('click', ()=>toPNG(timeChart,'time-allocation.png'));
-    $('#taskExport').addEventListener('click', ()=>toPNG(taskChart,'task-distribution.png'));
-    $('#resExport').addEventListener('click',  ()=>toPNG(resChart,'resources-hours.png'));
-
-    /* =========================
-       Notes (Hats + Lenses)
-       ========================= */
-    const textAreas = [
-      'hat-white','hat-red','hat-black','hat-yellow','hat-green','hat-blue',
-      'lens-dante','lens-art','lens-community'
-    ];
-
-    // Initialize values and counters
-    const wordCount = s => (s.trim().length ? s.trim().split(/\s+/).length : 0);
-
-    textAreas.forEach(id => {
-      const el = $('#'+id);
-      const saved = load(id, '');
+    /* ========= Bind all textareas by data-key ========= */
+    const areas = $$('textarea[data-key]');
+    areas.forEach(el => {
+      const key = el.getAttribute('data-key');
+      const saved = load(key, '');
       if (saved) el.value = saved;
-      const counter = document.querySelector(`.count[data-for="${id}"]`);
+
+      // Counter
+      const counter = document.querySelector(`.count[data-for="${key}"]`);
       const updateCount = () => { if (counter) counter.textContent = `${wordCount(el.value)} words`; };
       updateCount();
 
+      // Debounced save
       let t = null;
       el.addEventListener('input', () => {
         clearTimeout(t);
         t = setTimeout(() => {
-          save(id, el.value);
+          save(key, el.value);
           updateCount();
-        }, 200); // debounce for smoother typing
+        }, 200);
       });
     });
 
-    /* =========================
-       Export / Clear
-       ========================= */
-    $('#exportNotes').addEventListener('click', () => {
+    /* ========= Export Section 1 notes ========= */
+    $('#exportSection1').addEventListener('click', () => {
       const lines = [];
-      const push = (h, id) => {
-        const val = load(id, '');
-        lines.push(`\n=== ${h} ===\n${val || ''}`);
-      };
+      const push = (title, key) => lines.push(`\n=== ${title} ===\n${load(key, '')}`);
 
-      push('Six Hats · White (Facts)', 'hat-white');
-      push('Six Hats · Red (Feelings)', 'hat-red');
-      push('Six Hats · Black (Cautions)', 'hat-black');
-      push('Six Hats · Yellow (Benefits)', 'hat-yellow');
-      push('Six Hats · Green (Ideas)', 'hat-green');
-      push('Six Hats · Blue (Process)', 'hat-blue');
+      // Stations
+      push('Station 1 · Key Ideas', 'sec1_s1_ideas');
+      push('Station 1 · Evidence / Quotes', 'sec1_s1_evidence');
+      push('Station 1 · Connections & Implications', 'sec1_s1_connections');
+      push('Station 1 · Questions', 'sec1_s1_questions');
 
-      push('Lens · Dante', 'lens-dante');
-      push('Lens · Contemporary Art', 'lens-art');
-      push('Lens · Community Action', 'lens-community');
+      push('Station 2 · Key Ideas', 'sec1_s2_ideas');
+      push('Station 2 · Evidence / Quotes', 'sec1_s2_evidence');
+      push('Station 2 · Connections & Implications', 'sec1_s2_connections');
+      push('Station 2 · Questions', 'sec1_s2_questions');
+
+      push('Station 3 · Key Ideas', 'sec1_s3_ideas');
+      push('Station 3 · Evidence / Quotes', 'sec1_s3_evidence');
+      push('Station 3 · Connections & Implications', 'sec1_s3_connections');
+      push('Station 3 · Questions', 'sec1_s3_questions');
+
+      push('Station 4 · Key Ideas', 'sec1_s4_ideas');
+      push('Station 4 · Evidence / Quotes', 'sec1_s4_evidence');
+      push('Station 4 · Connections & Implications', 'sec1_s4_connections');
+      push('Station 4 · Questions', 'sec1_s4_questions');
+
+      push('Station 5 · Key Ideas', 'sec1_s5_ideas');
+      push('Station 5 · Evidence / Quotes', 'sec1_s5_evidence');
+      push('Station 5 · Connections & Implications', 'sec1_s5_connections');
+      push('Station 5 · Questions', 'sec1_s5_questions');
+
+      push('Station 6 · Key Ideas', 'sec1_s6_ideas');
+      push('Station 6 · Evidence / Quotes', 'sec1_s6_evidence');
+      push('Station 6 · Connections & Implications', 'sec1_s6_connections');
+      push('Station 6 · Questions', 'sec1_s6_questions');
+
+      // Hats
+      push('Hats · White (Facts)', 'sec1_hat_white');
+      push('Hats · Red (Feelings)', 'sec1_hat_red');
+      push('Hats · Black (Cautions)', 'sec1_hat_black');
+      push('Hats · Yellow (Benefits)', 'sec1_hat_yellow');
+      push('Hats · Green (Ideas)', 'sec1_hat_green');
+      push('Hats · Blue (Process)', 'sec1_hat_blue');
 
       const blob = new Blob([lines.join('\n')], {type:'text/plain'});
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url; a.download = 'dipbl_notes.txt'; a.click();
+      a.href = url; a.download = 'section1_notes.txt'; a.click();
       URL.revokeObjectURL(url);
     });
 
-    $('#clearAll').addEventListener('click', () => {
-      if (!confirm('Clear all saved data for this page on this device?')) return;
-      const keys = [];
+    /* ========= Clear Section 1 data ========= */
+    $('#clearSection1').addEventListener('click', () => {
+      if (!confirm('Clear all saved data for Section 1 on this device?')) return;
+      const toDelete = [];
       for (let i=0;i<localStorage.length;i++){
         const k = localStorage.key(i);
-        if (k && k.startsWith(PREFIX)) keys.push(k);
+        if (k && k.startsWith(PREFIX)) toDelete.push(k);
       }
-      keys.forEach(k => localStorage.removeItem(k));
+      toDelete.forEach(k => localStorage.removeItem(k));
       location.reload();
     });
   </script>
