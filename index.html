@@ -83,6 +83,34 @@
     .pane { transition: opacity .28s ease, transform .28s ease; }
     .pane.hidden { display: none; }
     .fade-enter { opacity: 0; transform: translateY(8px); }
+    /* Make typed text light and easy to read everywhere */
+textarea,
+input[type="text"] {
+  color: #f8fafc !important;          /* light text */
+  caret-color: #ffffff;               /* white caret */
+  background: rgba(0,0,0,.35);        /* darker field so light text pops */
+  border-color: rgba(255,255,255,.22);
+}
+
+/* Lighter placeholder for dark fields */
+textarea::placeholder,
+input[type="text"]::placeholder {
+  color: rgba(255,255,255,.65);
+}
+
+/* Exceptions: on light hat cards, keep dark text on light bg */
+.hat-white textarea,
+.hat-yellow textarea {
+  color: #111 !important;
+  caret-color: #111;
+  background: rgba(255,255,255,.92);
+  border-color: rgba(0,0,0,.12);
+}
+
+.hat-white textarea::placeholder,
+.hat-yellow textarea::placeholder {
+  color: rgba(0,0,0,.55);
+}
   </style>
 </head>
 <body class="text-gray-100 font-[Crimson_Text] min-h-full">
@@ -874,3 +902,4 @@
   </script>
 </body>
 </html>
+
