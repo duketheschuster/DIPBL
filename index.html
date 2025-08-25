@@ -59,6 +59,8 @@
       background: linear-gradient(90deg, rgba(200,164,93,.25), rgba(196,62,47,.25));
       border: 1px solid rgba(200,164,93,.35);
     }
+
+    /* Tabs */
     .tabs {
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
       border: 1px solid rgba(255,255,255,.1);
@@ -67,14 +69,23 @@
       background: linear-gradient(180deg, rgba(200,164,93,.14), rgba(200,164,93,.08));
       border: 1px solid rgba(200,164,93,.35);
       color: #f8f5ec;
-      transition: transform .05s ease-in-out;
+      transition: transform .05s ease-in-out, box-shadow .15s ease;
+      outline: none;
     }
-    .tab:hover { transform: translateY(-1px); }
-    .tab:active { transform: translateY(0); }
+    .tab:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,.25); }
+    .tab[aria-selected="true"] {
+      background: linear-gradient(180deg, rgba(196,62,47,.22), rgba(196,62,47,.14));
+      border-color: rgba(196,62,47,.55);
+      box-shadow: 0 6px 18px rgba(196,62,47,.25);
+    }
+
+    /* Panes + cross-fade */
+    .pane { transition: opacity .28s ease, transform .28s ease; }
+    .pane.hidden { display: none; }
+    .fade-enter { opacity: 0; transform: translateY(8px); }
   </style>
 </head>
 <body class="text-gray-100 font-[Crimson_Text] min-h-full">
-
   <!-- Header -->
   <header class="hdr text-center py-10 shadow-xl">
     <h1 class="font-[Cinzel] text-3xl md:text-5xl font-extrabold text-[var(--inferno-gold)] title-shadow">
@@ -85,20 +96,28 @@
   </header>
 
   <!-- Big Tabs -->
-  <nav class="max-w-6xl mx-auto px-4 md:px-6 pt-6">
+  <nav class="max-w-6xl mx-auto px-4 md:px-6 pt-6" role="tablist" aria-label="Sections">
     <div class="tabs rounded-2xl p-3 flex flex-wrap gap-3 justify-center">
-      <a href="#sec1" class="tab px-5 py-3 rounded-full text-sm md:text-base font-[Cinzel]">Section 1: Journey Into Dante's World</a>
-      <a href="#sec2" class="tab px-5 py-3 rounded-full text-sm md:text-base font-[Cinzel]">Section 2: Classical Literature in Modern Music</a>
-      <a href="#sec3" class="tab px-5 py-3 rounded-full text-sm md:text-base font-[Cinzel]">Section 3: Medieval Catholic Theology</a>
+      <button class="tab px-6 py-3 md:px-7 md:py-4 rounded-full text-base md:text-lg font-[Cinzel]"
+              role="tab" aria-controls="sec1" aria-selected="true" tabindex="0" data-target="sec1">
+        Section 1: Journey Into Dante's World
+      </button>
+      <button class="tab px-6 py-3 md:px-7 md:py-4 rounded-full text-base md:text-lg font-[Cinzel]"
+              role="tab" aria-controls="sec2" aria-selected="false" tabindex="-1" data-target="sec2">
+        Section 2: Classical Literature in Modern Music
+      </button>
+      <button class="tab px-6 py-3 md:px-7 md:py-4 rounded-full text-base md:text-lg font-[Cinzel]"
+              role="tab" aria-controls="sec3" aria-selected="false" tabindex="-1" data-target="sec3">
+        Section 3: Medieval Catholic Theology
+      </button>
     </div>
   </nav>
 
-  <main class="max-w-6xl mx-auto px-4 md:px-6 py-8 space-y-14">
-
+  <main class="max-w-6xl mx-auto px-4 md:px-6 py-8 space-y-0">
     <!-- ======================== -->
-    <!-- SECTION 1                -->
+    <!-- SECTION 1 (pane)         -->
     <!-- ======================== -->
-    <section id="sec1" class="space-y-8">
+    <section id="sec1" class="pane space-y-8">
       <header class="flex items-center gap-3">
         <div class="text-xs sectionBadge px-3 py-1 rounded-full text-[var(--parchment)]">Section 1 Organizer</div>
         <h2 class="font-[Cinzel] text-2xl text-[var(--inferno-gold)]">Journey Into Dante's World</h2>
@@ -282,44 +301,32 @@
           <div class="hat hat-white rounded-xl p-4">
             <h4 class="font-[Cinzel] text-lg mb-2">White — Facts</h4>
             <textarea data-key="sec1_hat_white" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Key facts, data, sources…"></textarea>
-            <div class="flex justify-between mt-2 text-xs">
-              <span>What do we know? What’s missing?</span><span class="count" data-for="sec1_hat_white"></span>
-            </div>
+            <div class="flex justify-between mt-2 text-xs"><span>What do we know? What’s missing?</span><span class="count" data-for="sec1_hat_white"></span></div>
           </div>
           <div class="hat hat-red rounded-xl p-4">
             <h4 class="font-[Cinzel] text-lg mb-2">Red — Feelings</h4>
             <textarea data-key="sec1_hat_red" class="w-full rounded p-3 text-sm text-white/90" placeholder="Emotions, gut feelings…"></textarea>
-            <div class="flex justify-between mt-2 text-xs">
-              <span>How does this feel?</span><span class="count" data-for="sec1_hat_red"></span>
-            </div>
+            <div class="flex justify-between mt-2 text-xs"><span>How does this feel?</span><span class="count" data-for="sec1_hat_red"></span></div>
           </div>
           <div class="hat hat-black rounded-xl p-4">
             <h4 class="font-[Cinzel] text-lg mb-2">Black — Cautions</h4>
             <textarea data-key="sec1_hat_black" class="w-full rounded p-3 text-sm text-gray-100" placeholder="Risks, weaknesses…"></textarea>
-            <div class="flex justify-between mt-2 text-xs">
-              <span>What could go wrong?</span><span class="count" data-for="sec1_hat_black"></span>
-            </div>
+            <div class="flex justify-between mt-2 text-xs"><span>What could go wrong?</span><span class="count" data-for="sec1_hat_black"></span></div>
           </div>
           <div class="hat hat-yellow rounded-xl p-4">
             <h4 class="font-[Cinzel] text-lg mb-2">Yellow — Benefits</h4>
             <textarea data-key="sec1_hat_yellow" class="w-full rounded p-3 text-sm text-gray-900" placeholder="Benefits, value…"></textarea>
-            <div class="flex justify-between mt-2 text-xs">
-              <span>Why is this worthwhile?</span><span class="count" data-for="sec1_hat_yellow"></span>
-            </div>
+            <div class="flex justify-between mt-2 text-xs"><span>Why is this worthwhile?</span><span class="count" data-for="sec1_hat_yellow"></span></div>
           </div>
           <div class="hat hat-green rounded-xl p-4">
             <h4 class="font-[Cinzel] text-lg mb-2">Green — Ideas</h4>
             <textarea data-key="sec1_hat_green" class="w-full rounded p-3 text-sm text-emerald-50" placeholder="Alternatives, creative angles…"></textarea>
-            <div class="flex justify-between mt-2 text-xs">
-              <span>What else could we try?</span><span class="count" data-for="sec1_hat_green"></span>
-            </div>
+            <div class="flex justify-between mt-2 text-xs"><span>What else could we try?</span><span class="count" data-for="sec1_hat_green"></span></div>
           </div>
           <div class="hat hat-blue rounded-xl p-4">
             <h4 class="font-[Cinzel] text-lg mb-2">Blue — Process</h4>
             <textarea data-key="sec1_hat_blue" class="w-full rounded p-3 text-sm text-slate-100" placeholder="Next steps, roles, timeline…"></textarea>
-            <div class="flex justify-between mt-2 text-xs">
-              <span>How do we manage it?</span><span class="count" data-for="sec1_hat_blue"></span>
-            </div>
+            <div class="flex justify-between mt-2 text-xs"><span>How do we manage it?</span><span class="count" data-for="sec1_hat_blue"></span></div>
           </div>
         </div>
       </section>
@@ -335,9 +342,9 @@
     </section>
 
     <!-- ======================== -->
-    <!-- SECTION 2                -->
+    <!-- SECTION 2 (pane)         -->
     <!-- ======================== -->
-    <section id="sec2" class="space-y-8">
+    <section id="sec2" class="pane hidden space-y-8" aria-hidden="true">
       <header class="flex items-center gap-3">
         <div class="text-xs sectionBadge px-3 py-1 rounded-full text-[var(--parchment)]">Section 2 Organizer</div>
         <h2 class="font-[Cinzel] text-2xl text-[var(--inferno-gold)]">Classical Literature in Modern Music</h2>
@@ -538,9 +545,9 @@
     </section>
 
     <!-- ======================== -->
-    <!-- SECTION 3                -->
+    <!-- SECTION 3 (pane)         -->
     <!-- ======================== -->
-    <section id="sec3" class="space-y-8">
+    <section id="sec3" class="pane hidden space-y-8" aria-hidden="true">
       <header class="flex items-center gap-3">
         <div class="text-xs sectionBadge px-3 py-1 rounded-full text-[var(--parchment)]">Section 3 Organizer</div>
         <h2 class="font-[Cinzel] text-2xl text-[var(--inferno-gold)]">Understanding Medieval Catholic Theology for Dante’s Inferno</h2>
@@ -691,7 +698,6 @@
         </div>
       </section>
     </section>
-
   </main>
 
   <footer class="text-center text-[11px] text-gray-400 py-6">
@@ -699,27 +705,26 @@
   </footer>
 
   <script>
-    /* ========= Core utils & storage (global) ========= */
-    const PREFIX = 'dipbl_p1_'; // single prefix for this page
+    /* ========= Core utils & storage ========= */
+    const PREFIX = 'dipbl_p1_';
+    const ACTIVE_KEY = PREFIX + 'active_section';
     const $ = (sel) => document.querySelector(sel);
     const $$ = (sel) => Array.from(document.querySelectorAll(sel));
     const save = (k, v) => { try { localStorage.setItem(PREFIX + k, v); } catch(e){} };
     const load = (k, d='') => { try { return localStorage.getItem(PREFIX + k) ?? d; } catch(e){ return d; } };
     const wordCount = (s) => (s.trim().length ? s.trim().split(/\s+/).length : 0);
 
-    /* ========= Bind all textareas by data-key ========= */
+    /* ========= Bind all textareas (autosave + counters) ========= */
     const areas = $$('textarea[data-key]');
     areas.forEach(el => {
       const key = el.getAttribute('data-key');
       const saved = load(key, '');
       if (saved) el.value = saved;
 
-      // Counter
       const counter = document.querySelector(`.count[data-for="${key}"]`);
       const updateCount = () => { if (counter) counter.textContent = `${wordCount(el.value)} words`; };
       updateCount();
 
-      // Debounced save
       let t = null;
       el.addEventListener('input', () => {
         clearTimeout(t);
@@ -730,19 +735,17 @@
       });
     });
 
-    /* ========= Export helpers ========= */
+    /* ========= Export & Clear (per section) ========= */
     function exportSection(prefix) {
       const lines = [];
       const sectionAreas = areas.filter(a => a.getAttribute('data-key').startsWith(prefix + '_'));
-      // Order by DOM appearance:
       sectionAreas.forEach(a => {
         const key = a.getAttribute('data-key');
-        const label = a.closest('article, .hat')?.querySelector('h3, h4')?.textContent?.trim() || 'Notes';
+        const parentTitle = a.closest('article, .hat')?.querySelector('h3, h4')?.textContent?.trim() || 'Notes';
         const fieldTitle = a.previousElementSibling?.textContent?.trim() || 'Notes';
-        lines.push(`\n=== ${label} · ${fieldTitle} ===\n${load(key, '')}`);
+        lines.push(`\n=== ${parentTitle} · ${fieldTitle} ===\n${load(key, '')}`);
       });
 
-      // Also add Six Hats grouped
       const hats = ['white','red','black','yellow','green','blue'];
       hats.forEach(h => {
         const k = `${prefix}_hat_${h}`;
@@ -769,18 +772,105 @@
         if (k && k.startsWith(PREFIX + prefix + '_')) toDelete.push(k);
       }
       toDelete.forEach(k => localStorage.removeItem(k));
-      // Also clear hats for the section (keys start with e.g., sec1_hat_)
-      for (let i=0;i<localStorage.length;i++){
-        const k = localStorage.key(i);
-        if (k && k.startsWith(PREFIX + prefix + '_hat_')) toDelete.push(k);
-      }
-      toDelete.forEach(k => localStorage.removeItem(k));
       location.reload();
     }
 
-    // Wire buttons
     $$('.export-btn').forEach(btn => btn.addEventListener('click', () => exportSection(btn.dataset.export)));
     $$('.clear-btn').forEach(btn => btn.addEventListener('click', () => clearSection(btn.dataset.clear)));
+
+    /* ========= Tabs: one pane at a time with cross-fade ========= */
+    const tabs = $$('[role="tab"]');
+    const panes = $$('.pane');
+
+    function setActiveTab(targetId, pushHash=true) {
+      const current = panes.find(p => !p.classList.contains('hidden'));
+      const next = document.getElementById(targetId);
+      if (!next || current === next) return;
+
+      // Update ARIA on tabs
+      tabs.forEach(t => {
+        const isTarget = t.dataset.target === targetId;
+        t.setAttribute('aria-selected', isTarget ? 'true' : 'false');
+        t.setAttribute('tabindex', isTarget ? '0' : '-1');
+      });
+
+      // Fade out current then hide
+      if (current) {
+        current.classList.add('fade-enter');   // opacity 0 + downshift
+        setTimeout(() => {
+          current.classList.add('hidden');
+          current.classList.remove('fade-enter');
+          current.setAttribute('aria-hidden', 'true');
+
+          // Show next with fade-in
+          next.classList.remove('hidden');
+          next.classList.add('fade-enter');
+          next.setAttribute('aria-hidden', 'false');
+          requestAnimationFrame(() => {
+            next.classList.remove('fade-enter'); // transitions to opacity 1
+          });
+        }, 280);
+      } else {
+        next.classList.remove('hidden');
+        next.setAttribute('aria-hidden', 'false');
+      }
+
+      // Persist + hash
+      try { localStorage.setItem(ACTIVE_KEY, targetId); } catch {}
+      if (pushHash) {
+        history.replaceState(null, '', '#' + targetId);
+      }
+
+      // Move focus to the active tab (accessibility)
+      const activeTab = tabs.find(t => t.dataset.target === targetId);
+      if (activeTab) activeTab.focus();
+    }
+
+    // Click handlers
+    tabs.forEach(tab => {
+      tab.addEventListener('click', (e) => {
+        e.preventDefault();
+        setActiveTab(tab.dataset.target);
+      });
+      // Left/Right arrow nav
+      tab.addEventListener('keydown', (e) => {
+        const i = tabs.indexOf ? tabs.indexOf(tab) : tabs.findIndex(t => t === tab);
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          const next = tabs[(i + 1) % tabs.length];
+          setActiveTab(next.dataset.target);
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          const prev = tabs[(i - 1 + tabs.length) % tabs.length];
+          setActiveTab(prev.dataset.target);
+        }
+      });
+    });
+
+    // Init: from hash or saved, default sec1
+    (function initActive() {
+      const fromHash = location.hash?.replace('#','');
+      const fromStore = localStorage.getItem(ACTIVE_KEY);
+      const start = ['sec1','sec2','sec3'].includes(fromHash) ? fromHash
+                   : ['sec1','sec2','sec3'].includes(fromStore) ? fromStore
+                   : 'sec1';
+      // Ensure only start is visible
+      panes.forEach(p => {
+        if (p.id === start) {
+          p.classList.remove('hidden');
+          p.setAttribute('aria-hidden', 'false');
+        } else {
+          p.classList.add('hidden');
+          p.setAttribute('aria-hidden', 'true');
+        }
+      });
+      tabs.forEach(t => {
+        const is = t.dataset.target === start;
+        t.setAttribute('aria-selected', is ? 'true' : 'false');
+        t.setAttribute('tabindex', is ? '0' : '-1');
+      });
+      if (location.hash !== '#' + start) history.replaceState(null, '', '#' + start);
+    })();
   </script>
 </body>
 </html>
